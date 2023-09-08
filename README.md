@@ -22,6 +22,19 @@ Rule::allClasses()
     ->should(new HaveNameMatching('*Controller'))
     ->because('it\'s a symfony naming convention');
 ```
+
+This project is a clone of [phparkitect/arkitect](https://github.com/phparkitect/arkitect), with some extra features 
+on top of it.
+
+As much as possible, this project will comply to upstream, this is just a way to get the features
+I need, quickly incorporated.
+
+I will periodically rebase on the original project (upstream), and also periodically open PRs, 
+to incorporate the features I build, onto upstream.
+This means the **history on master will change**. The tags will be stable though.
+
+This project uses semantic versioning, but completely independent of the upstream versioning.
+
 # Installation
 
 ## Using Composer
