@@ -5,7 +5,9 @@ namespace Arkitect\RuleBuilders\Architecture;
 
 use Arkitect\Expression\Boolean\Andx;
 use Arkitect\Expression\Boolean\Not;
+use Arkitect\Expression\Boolean\Orx;
 use Arkitect\Expression\Expression;
+use Arkitect\Expression\ForClasses\DependsOnlyOnTheseExpressions;
 use Arkitect\Expression\ForClasses\DependsOnlyOnTheseNamespaces;
 use Arkitect\Expression\ForClasses\NotDependsOnTheseNamespaces;
 use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
@@ -111,43 +113,66 @@ class Architecture implements Component, DefinedBy, Where, MayDependOnComponents
                 continue;
             }
 
-            $allowedDependencies = array_map(function (string $componentName): string {
-                return $this->componentSelectors[$componentName];
-            }, $this->componentDependsOnlyOnTheseNamespaces[$name]);
-
             yield Rule::allClasses()
                 ->that(new ResideInOneOfTheseNamespaces($selector))
-                ->should(new DependsOnlyOnTheseNamespaces(...$allowedDependencies))
+                ->should($this->createAllowedExpression($this->componentDependsOnlyOnTheseNamespaces[$name]))
                 ->because('of component architecture');
         }
     }
 
-    public function createForbiddenExpression(array $forbiddenComponents): Expression
+    private function createForbiddenExpression(array $components): Expression
     {
-        $forbiddenNamespaceSelectors = array_filter(
+        $namespaceSelectors = $this->extractComponentsNamespaceSelectors($components);
+
+        $expressionSelectors = $this->extractComponentExpressionSelectors($components);
+
+        $expressionList = [];
+        if ($namespaceSelectors !== []) {
+            $expressionList[] = new NotDependsOnTheseNamespaces(...$namespaceSelectors);
+        }
+        if ($expressionSelectors !== []) {
+            $expressionList[] = new Not(new Orx(...$expressionSelectors));
+        }
+
+        return count($expressionList) === 1
+            ? array_pop($expressionList)
+            : new Andx(...$expressionList);
+    }
+
+    private function createAllowedExpression(array $components): Expression
+    {
+        $namespaceSelectors = $this->extractComponentsNamespaceSelectors($components);
+
+        $expressionSelectors = $this->extractComponentExpressionSelectors($components);
+
+        if ($namespaceSelectors === [] && $expressionSelectors === []) {
+            return new Orx(); // always true
+        }
+
+        if ($namespaceSelectors !== []) {
+            $expressionSelectors[] = new ResideInOneOfTheseNamespaces(...$namespaceSelectors);
+        }
+
+        return new DependsOnlyOnTheseExpressions(...$expressionSelectors);
+    }
+
+    private function extractComponentsNamespaceSelectors(array $components): array
+    {
+        return array_filter(
             array_map(function (string $componentName): ?string {
                 $selector = $this->componentSelectors[$componentName];
                 return \is_string($selector) ? $selector : null;
-            }, $forbiddenComponents)
+            }, $components)
         );
+    }
 
-        $forbiddenExpressionSelectors = array_filter(
+    public function extractComponentExpressionSelectors(array $components): array
+    {
+        return array_filter(
             array_map(function (string $componentName): ?Expression {
                 $selector = $this->componentSelectors[$componentName];
                 return \is_string($selector) ? null : $selector;
-            }, $forbiddenComponents)
+            }, $components)
         );
-
-        $forbiddenExpressionList = [];
-        if ($forbiddenNamespaceSelectors !== []) {
-            $forbiddenExpressionList[] = new NotDependsOnTheseNamespaces(...$forbiddenNamespaceSelectors);
-        }
-        if ($forbiddenExpressionSelectors !== []) {
-            $forbiddenExpressionList[] = new Not(new Andx(...$forbiddenExpressionSelectors));
-        }
-
-        return count($forbiddenExpressionList) === 1
-            ? array_pop($forbiddenExpressionList)
-            : new Andx(...$forbiddenExpressionList);
     }
 }

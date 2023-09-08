@@ -35,6 +35,6 @@ class ViolationMessage
             return $this->rule;
         }
 
-        return "$this->violation, but $this->rule";
+        return "[$this->violation] from the rule [$this->rule]";
     }
 }
