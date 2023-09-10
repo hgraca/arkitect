@@ -10,7 +10,7 @@ final class PrinterFactory
         return Printer::FORMAT_TEXT;
     }
 
-    public static function create(string $format): Printer
+    public static function create(?string $format = null): Printer
     {
         switch ($format) {
             case Printer::FORMAT_GITLAB:
