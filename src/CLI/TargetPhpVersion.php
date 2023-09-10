@@ -45,7 +45,7 @@ class TargetPhpVersion
         return new self(self::PHP_8_4);
     }
 
-    public static function create(?string $version): self
+    public static function create(?string $version = null): self
     {
         return new self($version ?? phpversion());
     }
