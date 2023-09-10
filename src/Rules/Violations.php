@@ -75,7 +75,7 @@ class Violations implements \IteratorAggregate, \Countable, \JsonSerializable
         }, []);
     }
 
-    public function toString(string $format): string
+    public function toString(?string $format = null): string
     {
         $printer = (new PrinterFactory())->create($format);
 

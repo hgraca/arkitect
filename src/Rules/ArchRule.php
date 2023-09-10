@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arkitect\Rules;
 
 use Arkitect\Analyzer\ClassDescription;
+use Arkitect\Expression\Expression;
 
 class ArchRule implements DSL\ArchRule
 {
@@ -39,7 +40,11 @@ class ArchRule implements DSL\ArchRule
 
     public function check(ClassDescription $classDescription, Violations $violations): void
     {
-        if ($classDescription->namespaceMatchesOneOfTheseStringNamespaces(...$this->classesToBeExcluded)) {
+        if ($classDescription->namespaceMatchesOneOfTheseStringNamespaces(...$this->getNamespacesToBeExcluded())) {
+            return;
+        }
+
+        if ($classDescription->matchesOneOfTheseExpressions(...$this->getExpressionsToBeExcluded())) {
             return;
         }
 
@@ -60,5 +65,26 @@ class ArchRule implements DSL\ArchRule
         $this->runOnlyThis = true;
 
         return $this;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getNamespacesToBeExcluded(): array
+    {
+        return array_filter($this->classesToBeExcluded, 'is_string');
+    }
+
+    /**
+     * @return array<Expression>
+     */
+    private function getExpressionsToBeExcluded(): array
+    {
+        return array_filter(
+            $this->classesToBeExcluded,
+            function ($item) {
+                return $item instanceof Expression;
+            }
+        );
     }
 }

@@ -5,7 +5,7 @@ namespace Arkitect\CLI\Printer;
 
 final class PrinterFactory
 {
-    public function create(string $format): Printer
+    public function create(?string $format = null): Printer
     {
         switch ($format) {
             case Printer::FORMAT_GITLAB:
