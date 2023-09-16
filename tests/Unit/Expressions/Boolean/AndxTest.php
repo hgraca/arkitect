@@ -80,13 +80,17 @@ class AndxTest extends TestCase
             $violationError
         );
         self::assertEquals(
-            "The class 'HappyIsland' violated the expression\n"
-            ."should extend one of these classes: SomeClass, but (\n"
-            ."should implement SomeInterface because reasons\n"
-            ."AND\n"
-            ."should extend one of these classes: SomeClass because reasons\n"
-            .') because reasons',
-            $violations->get(0)->getError()
+            <<<'STR'
+            The class 'HappyIsland' violated the expression
+            should extend one of these classes: SomeClass
+            from the rule
+            (
+            should implement SomeInterface because reasons
+            AND
+            should extend one of these classes: SomeClass because reasons
+            ) because reasons
+            STR,
+            $violations->get(0)->getError(),
         );
     }
 }

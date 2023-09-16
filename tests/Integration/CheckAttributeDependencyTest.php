@@ -29,7 +29,10 @@ class CheckAttributeDependencyTest extends TestCase
         self::assertCount(1, $runner->getViolations());
         self::assertCount(0, $runner->getParsingErrors());
 
-        self::assertStringContainsString('depends on App\Invalid\Attr, but should not depend on these namespaces: App\Invalid', $runner->getViolations()->get(0)->getError());
+        self::assertStringContainsString(
+            "depends on App\Invalid\Attr\nfrom the rule\nshould not depend on these namespaces: App\Invalid",
+            $runner->getViolations()->get(0)->getError()
+        );
     }
 
     public function createDirStructureWithAttributes(): array

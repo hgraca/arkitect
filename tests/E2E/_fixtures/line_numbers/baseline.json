@@ -3,17 +3,17 @@
         {
             "fqcn": "App\\Application\\Foo",
             "line": 13,
-            "error": "depends on App\\Ui\\Bar, but should depend only on classes in one of these namespaces: App\\Application because That is how I want it"
+            "error": "depends on App\\Ui\\Bar\nfrom the rule\nshould depend only on classes in one of these namespaces: App\\Application because That is how I want it"
         },
         {
             "fqcn": "App\\Application\\Foo",
             "line": 20,
-            "error": "depends on App\\Ui\\Baz, but should depend only on classes in one of these namespaces: App\\Application because That is how I want it"
+            "error": "depends on App\\Ui\\Baz\nfrom the rule\nshould depend only on classes in one of these namespaces: App\\Application because That is how I want it"
         },
         {
             "fqcn": "App\\Application\\Foo",
             "line": 17,
-            "error": "depends on App\\Ui\\Bar, but should depend only on classes in one of these namespaces: App\\Application because That is how I want it"
+            "error": "depends on App\\Ui\\Bar\nfrom the rule\nshould depend only on classes in one of these namespaces: App\\Application because That is how I want it"
         }
     ],
     "stopOnFailure": false
