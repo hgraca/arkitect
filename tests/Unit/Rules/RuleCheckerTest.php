@@ -20,6 +20,7 @@ use Arkitect\Rules\Rule;
 use Arkitect\Rules\Violation;
 use Arkitect\Rules\Violations;
 use Arkitect\Tests\Fixtures\Animal\AnimalInterface;
+use Arkitect\Tests\Fixtures\Fruit\AnimalFruit;
 use Arkitect\Tests\Fixtures\Fruit\CavendishBanana;
 use Arkitect\Tests\Fixtures\Fruit\DwarfCavendishBanana;
 use Arkitect\Tests\Fixtures\Fruit\FruitInterface;
@@ -55,7 +56,7 @@ class RuleCheckerTest extends TestCase
         $classSet = ClassSet::fromDir(\FIXTURES_PATH);
 
         $rules[] = Rule::allClasses()
-            ->except(FruitInterface::class, CavendishBanana::class, DwarfCavendishBanana::class)
+            ->except(FruitInterface::class, CavendishBanana::class, DwarfCavendishBanana::class, AnimalFruit::class)
             ->that(new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\Fruit'))
             ->should(new Implement(FruitInterface::class))
             ->because('this tests that string exceptions fail');
@@ -85,7 +86,7 @@ class RuleCheckerTest extends TestCase
         $classSet = ClassSet::fromDir(\FIXTURES_PATH);
 
         $rules[] = Rule::allClasses()
-            ->except(FruitInterface::class, CavendishBanana::class)
+            ->except(FruitInterface::class, CavendishBanana::class, AnimalFruit::class)
             ->that(new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\Fruit'))
             ->should(new Implement(FruitInterface::class))
             ->because('this tests that string exceptions fail');

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arkitect\Expression;
 
 use Arkitect\Analyzer\ClassDescription;
+use Arkitect\Rules\Violations;
 
 /**
  * @implements \IteratorAggregate<Expression>
@@ -29,6 +30,22 @@ final class ExpressionCollection implements \IteratorAggregate
     public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->expressionList);
+    }
+
+    /**
+     * Returns true if there is at least one expression that is not violated by the class.
+     */
+    public function hasComplianceWith(ClassDescription $dependencyClassDescription): bool
+    {
+        foreach ($this->expressionList as $expression) {
+            $newViolations = new Violations();
+            $expression->evaluate($dependencyClassDescription, $newViolations);
+            if (0 === $newViolations->count()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function describeAgainstClass(ClassDescription $theClass, string $operation = 'OR'): string
