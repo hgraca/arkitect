@@ -13,7 +13,7 @@ use Arkitect\Rules\Violations;
 
 class IsNotAbstract implements Expression
 {
-    public function describe(ClassDescription $theClass, string $because): Description
+    public function describe(ClassDescription $theClass, string $because = ''): Description
     {
         return new Description("{$theClass->getName()} should not be abstract", $because);
     }
@@ -23,7 +23,7 @@ class IsNotAbstract implements Expression
         return !($theClass->isInterface() || $theClass->isTrait() || $theClass->isEnum() || $theClass->isFinal());
     }
 
-    public function evaluate(ClassDescription $theClass, Violations $violations, string $because): void
+    public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void
     {
         if (!$theClass->isAbstract()) {
             return;

@@ -23,12 +23,12 @@ return static function (Config $config): void {
             $this->implements = $implements;
         }
 
-        public function describe(ClassDescription $theClass, string $because): Description
+        public function describe(ClassDescription $theClass, string $because = ''): Description
         {
             return new Description("{$theClass->getFQCN()} should implement {$this->implements}", $because);
         }
 
-        public function evaluate(ClassDescription $theClass, Violations $violations, string $because): void
+        public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void
         {
             if (is_a($theClass->getFQCN(), $this->implements, true)) {
                 return;

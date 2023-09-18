@@ -13,7 +13,7 @@ use Arkitect\Rules\Violations;
 
 class IsNotReadonly implements Expression
 {
-    public function describe(ClassDescription $theClass, string $because): Description
+    public function describe(ClassDescription $theClass, string $because = ''): Description
     {
         return new Description("{$theClass->getName()} should not be readonly", $because);
     }
@@ -23,7 +23,7 @@ class IsNotReadonly implements Expression
         return !($theClass->isInterface() || $theClass->isTrait() || $theClass->isEnum());
     }
 
-    public function evaluate(ClassDescription $theClass, Violations $violations, string $because): void
+    public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void
     {
         if (!$theClass->isReadonly()) {
             return;
