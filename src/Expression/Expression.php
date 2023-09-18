@@ -16,10 +16,10 @@ use Arkitect\Rules\Violations;
 interface Expression
 {
     /**
-     * Returns a human readable description of the expression
+     * Returns a human-readable description of the expression
      * $theClass can be used to add contextual information.
      */
-    public function describe(ClassDescription $theClass, string $because): Description;
+    public function describe(ClassDescription $theClass, string $because = ''): Description;
 
     /**
      * Checks if the expression applies to the class passed as parameter.
@@ -33,7 +33,7 @@ interface Expression
 
     /**
      * Evaluates the expression for the class passed as parameter.
-     * It should adds violations if rule is violated.
+     * It should add violations if rule is violated.
      */
-    public function evaluate(ClassDescription $theClass, Violations $violations, string $because): void;
+    public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void;
 }

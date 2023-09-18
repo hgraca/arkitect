@@ -22,7 +22,7 @@ class NotImplement implements Expression
         $this->interface = $interface;
     }
 
-    public function describe(ClassDescription $theClass, string $because): Description
+    public function describe(ClassDescription $theClass, string $because = ''): Description
     {
         return new Description("should not implement {$this->interface}", $because);
     }
@@ -32,7 +32,7 @@ class NotImplement implements Expression
         return !($theClass->isInterface() || $theClass->isTrait());
     }
 
-    public function evaluate(ClassDescription $theClass, Violations $violations, string $because): void
+    public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void
     {
         if ($theClass->isInterface() || $theClass->isTrait()) {
             return;

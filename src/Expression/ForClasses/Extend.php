@@ -21,14 +21,14 @@ class Extend implements Expression
         $this->classNames = $classNames;
     }
 
-    public function describe(ClassDescription $theClass, string $because): Description
+    public function describe(ClassDescription $theClass, string $because = ''): Description
     {
         $desc = implode(', ', $this->classNames);
 
         return new Description("should extend one of these classes: {$desc}", $because);
     }
 
-    public function evaluate(ClassDescription $theClass, Violations $violations, string $because): void
+    public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void
     {
         $extends = $theClass->getExtends();
 
