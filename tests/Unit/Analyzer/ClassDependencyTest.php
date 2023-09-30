@@ -28,6 +28,37 @@ class ClassDependencyTest extends TestCase
         self::assertEquals($this->line, $this->classDependency->getLine());
     }
 
+    public function test_it_should_create_native_class_dependency(): void
+    {
+        $nativeClassFqcn = \ArrayObject::class;
+        $classDependency = new ClassDependency($nativeClassFqcn, $this->line);
+        self::assertEquals(FullyQualifiedClassName::fromString($nativeClassFqcn), $classDependency->getFQCN());
+        self::assertEquals($this->line, $classDependency->getLine());
+    }
+
+    public function test_it_should_create_native_class_description(): void
+    {
+        $nativeClassFqcn = \ArrayObject::class;
+        $classDependency = new ClassDependency($nativeClassFqcn, $this->line);
+        $classDescription = $classDependency->getClassDescription();
+        self::assertEquals('ArrayObject', $classDescription->getName());
+        self::assertEquals('', $classDescription->getFilePath());
+        self::assertEquals([], $classDescription->getAttributes());
+        self::assertEquals(
+            [
+                FullyQualifiedClassName::fromString('IteratorAggregate'),
+                FullyQualifiedClassName::fromString('Traversable'),
+                FullyQualifiedClassName::fromString('ArrayAccess'),
+                FullyQualifiedClassName::fromString('Serializable'),
+                FullyQualifiedClassName::fromString('Countable'),
+            ],
+            $classDescription->getInterfaces()
+        );
+        self::assertEquals([], $classDescription->getDocBlock());
+        self::assertEquals([], $classDescription->getExtends());
+        self::assertEquals($nativeClassFqcn, $classDescription->getFQCN());
+    }
+
     public function test_it_should_match(): void
     {
         self::assertTrue($this->classDependency->matches('HappyIsland'));
