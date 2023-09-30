@@ -48,6 +48,22 @@ final class ExpressionCollection implements \IteratorAggregate
         return false;
     }
 
+    /**
+     * Returns true if the class violate any of the expressions.
+     */
+    public function hasViolationBy(ClassDescription $dependencyClassDescription): bool
+    {
+        foreach ($this->expressionList as $expression) {
+            $newViolations = new Violations();
+            $expression->evaluate($dependencyClassDescription, $newViolations);
+            if (0 < $newViolations->count()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function describeAgainstClass(ClassDescription $theClass, string $operation = 'OR'): string
     {
         $expressionsDescriptions = [];
