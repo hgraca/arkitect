@@ -1,5 +1,5 @@
 {
-    "name": "hgraca/phparkitect",
+    "name": "modulith/arch-check",
     "description": "Enforce architectural constraints in your PHP applications",
     "type": "library",
     "license": "MIT",
