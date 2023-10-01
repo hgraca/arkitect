@@ -58,13 +58,15 @@ class ViolationsTest extends TestCase
         );
 
         $this->violationStore->add($violation);
-        $expected = '
-App\Controller\ProductController has 1 violations
-  should implement ContainerInterface
+        $expected = <<<STR
 
-App\Controller\Foo has 1 violations
-  should have name end with Controller
-';
+            App\Controller\ProductController has 1 violations
+              should implement ContainerInterface
+
+            App\Controller\Foo has 1 violations
+              should have name end with Controller
+
+            STR;
 
         self::assertEquals($expected, $this->violationStore->toString(Printer::FORMAT_TEXT));
     }

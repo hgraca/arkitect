@@ -26,7 +26,7 @@ final class AllPassTest extends TestCase
 
         self::assertEquals(0, $violations->count());
         self::assertEquals(
-            AllPass::DESCRIPTION." because {$because}",
+            AllPass::DESCRIPTION."\nbecause {$because}",
             $expression->describe($classDescription, $because)->toString()
         );
     }

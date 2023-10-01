@@ -13,7 +13,8 @@ class ImplementTest extends TestCase
 {
     public function test_it_should_return_violation_error(): void
     {
-        $implementConstraint = new Implement('interface');
+        $interface = 'interface';
+        $implementConstraint = new Implement($interface);
 
         $classDescription = (new ClassDescriptionBuilder())
             ->setFilePath('src/Foo.php')
@@ -27,7 +28,8 @@ class ImplementTest extends TestCase
         $implementConstraint->evaluate($classDescription, $violations, $because);
 
         self::assertNotEquals(0, $violations->count());
-        self::assertEquals('should implement interface because we want to add this rule for our software', $violationError);
+
+        self::assertEquals("should implement $interface\nbecause we want to add this rule for our software", $violationError);
     }
 
     public function test_it_should_return_true_if_not_depends_on_namespace(): void

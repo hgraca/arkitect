@@ -27,7 +27,7 @@ class IsNotEnumTest extends TestCase
         $isEnum->evaluate($classDescription, $violations, $because);
 
         self::assertNotEquals(0, $violations->count());
-        self::assertEquals('HappyIsland should not be an enum because we want to add this rule for our software', $violationError);
+        self::assertEquals("HappyIsland should not be an enum\nbecause we want to add this rule for our software", $violationError);
     }
 
     public function test_it_should_return_true_if_is_not_enum(): void

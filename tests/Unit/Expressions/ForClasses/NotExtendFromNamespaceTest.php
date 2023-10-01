@@ -27,7 +27,7 @@ class NotExtendFromNamespaceTest extends TestCase
 
         self::assertEquals(1, $violations->count());
         self::assertEquals(
-            'should not extend from namespace My because we want to add this rule for our software',
+            "should not extend from namespace My\nbecause we want to add this rule for our software",
             $notExtend->describe($classDescription, $because)->toString() // violation description
         );
     }
@@ -80,7 +80,7 @@ class NotExtendFromNamespaceTest extends TestCase
 
         self::assertEquals(1, $violations->count());
         self::assertEquals(
-            "should not extend from namespace My, except for [My\Yet] because we want to add this rule for our software",
+            "should not extend from namespace My, except for [My\Yet]\nbecause we want to add this rule for our software",
             $notExtend->describe($classDescription, $because)->toString() // violation description
         );
     }

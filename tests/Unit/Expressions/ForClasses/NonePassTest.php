@@ -26,7 +26,7 @@ final class NonePassTest extends TestCase
 
         self::assertEquals(1, $violations->count());
         self::assertEquals(
-            NonePass::DESCRIPTION." because {$because}",
+            NonePass::DESCRIPTION."\nbecause {$because}",
             $expression->describe($classDescription, $because)->toString()
         );
     }

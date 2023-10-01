@@ -90,7 +90,7 @@ class ResideInOneOfTheseNamespacesTest extends TestCase
         $expression = new ResideInOneOfTheseNamespaces('A', 'B', 'A', 'C', 'D', 'D');
 
         self::assertSame(
-            'resides in one of these namespaces: A, B, C, D because rave',
+            "resides in one of these namespaces: A, B, C, D\nbecause rave",
             $expression->describe(ClassDescription::getBuilder('Marko', 'src/Foo.php')->build(), 'rave')->toString()
         );
     }

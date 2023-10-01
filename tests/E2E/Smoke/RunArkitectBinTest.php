@@ -20,29 +20,37 @@ class RunArkitectBinTest extends TestCase
     {
         $process = $this->runArkitectPassingConfigFilePath(__DIR__.'/../_fixtures/configMvc.php');
 
-        $expectedErrors = 'ERRORS!
+        $expectedErrors = <<<STR
+            ERRORS!
 
-App\Controller\Foo has 2 violations
-  should have a name that matches *Controller because we want uniform naming
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\Foo has 2 violations
+              should have a name that matches *Controller
+            because we want uniform naming
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\ProductsController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\ProductsController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\UserController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\UserController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\YieldController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\YieldController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Domain\Model has 2 violations
-  depends on App\Services\UserService
-from the rule
-should not depend on classes outside namespace App\Domain because we want protect our domain (on line 14)
-  depends on App\Services\CartService
-from the rule
-should not depend on classes outside namespace App\Domain because we want protect our domain (on line 15)
-';
+            App\Domain\Model has 2 violations
+              depends on App\Services\UserService
+            from the rule
+            should not depend on classes outside namespace App\Domain
+            because we want protect our domain (on line 14)
+              depends on App\Services\CartService
+            from the rule
+            should not depend on classes outside namespace App\Domain
+            because we want protect our domain (on line 15)
+            STR;
 
         self::assertEquals(self::ERROR_CODE, $process->getExitCode());
         self::assertStringContainsString($expectedErrors, $process->getOutput());
@@ -52,29 +60,37 @@ should not depend on classes outside namespace App\Domain because we want protec
     {
         $process = $this->runArkitect();
 
-        $expectedErrors = 'ERRORS!
+        $expectedErrors = <<<STR
+            ERRORS!
 
-App\Controller\Foo has 2 violations
-  should have a name that matches *Controller because we want uniform naming
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\Foo has 2 violations
+              should have a name that matches *Controller
+            because we want uniform naming
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\ProductsController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\ProductsController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\UserController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\UserController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\YieldController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\YieldController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Domain\Model has 2 violations
-  depends on App\Services\UserService
-from the rule
-should not depend on classes outside namespace App\Domain because we want protect our domain (on line 14)
-  depends on App\Services\CartService
-from the rule
-should not depend on classes outside namespace App\Domain because we want protect our domain (on line 15)
-';
+            App\Domain\Model has 2 violations
+              depends on App\Services\UserService
+            from the rule
+            should not depend on classes outside namespace App\Domain
+            because we want protect our domain (on line 14)
+              depends on App\Services\CartService
+            from the rule
+            should not depend on classes outside namespace App\Domain
+            because we want protect our domain (on line 15)
+            STR;
 
         self::assertStringContainsString($expectedErrors, $process->getOutput());
         self::assertEquals(self::ERROR_CODE, $process->getExitCode());
@@ -99,10 +115,12 @@ should not depend on classes outside namespace App\Domain because we want protec
     {
         $process = $this->runArkitectPassingConfigFilePath(__DIR__.'/../_fixtures/configMvcForYieldBug.php');
 
-        $expectedErrors = 'ERRORS!
+        $expectedErrors = <<<STR
+            ERRORS!
 
-App\Controller\Foo has 1 violations
-  should have a name that matches *Controller';
+            App\Controller\Foo has 1 violations
+              should have a name that matches *Controller
+            STR;
 
         self::assertEquals(self::ERROR_CODE, $process->getExitCode());
         self::assertStringContainsString($expectedErrors, $process->getOutput());

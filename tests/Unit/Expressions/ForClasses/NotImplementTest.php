@@ -46,12 +46,13 @@ class NotImplementTest extends TestCase
 
     public function test_it_should_return_false_if_depends_on_namespace(): void
     {
-        $implementConstraint = new NotImplement('interface');
+        $interface = 'interface';
+        $implementConstraint = new NotImplement($interface);
 
         $classDescription = (new ClassDescriptionBuilder())
             ->setFilePath('src/Foo.php')
             ->setClassName('HappyIsland')
-            ->addInterface('interface', 1)
+            ->addInterface($interface, 1)
             ->build();
 
         $because = 'we want to add this rule for our software';
@@ -61,8 +62,9 @@ class NotImplementTest extends TestCase
         $violationError = $implementConstraint->describe($classDescription, $because)->toString();
 
         self::assertNotEquals(0, $violations->count());
+
         self::assertEquals(
-            'should not implement interface because we want to add this rule for our software',
+            'should not implement '.$interface."\nbecause we want to add this rule for our software",
             $violationError
         );
     }

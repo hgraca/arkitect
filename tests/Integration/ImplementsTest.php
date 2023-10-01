@@ -30,10 +30,10 @@ class ImplementsTest extends TestCase
         self::assertCount(2, $runner->getViolations());
 
         self::assertEquals('App\AClass', $runner->getViolations()->get(0)->getFqcn());
-        self::assertStringContainsString('should have a name that matches An* because reasons', $runner->getViolations()->get(0)->getError());
+        self::assertStringContainsString("should have a name that matches An*\nbecause reasons", $runner->getViolations()->get(0)->getError());
 
         self::assertEquals('App\AEnum', $runner->getViolations()->get(1)->getFqcn());
-        self::assertStringContainsString('should have a name that matches An* because reasons', $runner->getViolations()->get(1)->getError());
+        self::assertStringContainsString("should have a name that matches An*\nbecause reasons", $runner->getViolations()->get(1)->getError());
     }
 
     public function createDirStructure(): array

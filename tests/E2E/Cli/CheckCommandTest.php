@@ -32,28 +32,37 @@ class CheckCommandTest extends TestCase
     {
         $cmdTester = $this->runCheck(__DIR__.'/../_fixtures/configMvc.php');
 
-        $expectedErrors = 'ERRORS!
+        $expectedErrors = <<<STR
+            ERRORS!
 
-App\Controller\Foo has 2 violations
-  should have a name that matches *Controller because we want uniform naming
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\Foo has 2 violations
+              should have a name that matches *Controller
+            because we want uniform naming
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\ProductsController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\ProductsController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\UserController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\UserController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Controller\YieldController has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware
+            App\Controller\YieldController has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
 
-App\Domain\Model has 2 violations
-  depends on App\Services\UserService
-from the rule
-should not depend on classes outside namespace App\Domain because we want protect our domain (on line 14)
-  depends on App\Services\CartService
-from the rule
-should not depend on classes outside namespace App\Domain because we want protect our domain (on line 15)';
+            App\Domain\Model has 2 violations
+              depends on App\Services\UserService
+            from the rule
+            should not depend on classes outside namespace App\Domain
+            because we want protect our domain (on line 14)
+              depends on App\Services\CartService
+            from the rule
+            should not depend on classes outside namespace App\Domain
+            because we want protect our domain (on line 15)
+            STR;
 
         $this->assertCheckHasErrors($cmdTester, $expectedErrors);
     }
@@ -62,9 +71,11 @@ should not depend on classes outside namespace App\Domain because we want protec
     {
         $cmdTester = $this->runCheck(__DIR__.'/../_fixtures/configMvc.php', true);
 
-        $expectedErrors = '
-App\Controller\Foo has 1 violations
-  should implement ContainerAwareInterface because all controllers should be container aware';
+        $expectedErrors = <<<STR
+            App\Controller\Foo has 1 violations
+              should implement ContainerAwareInterface
+            because all controllers should be container aware
+            STR;
 
         $this->assertCheckHasErrors($cmdTester, $expectedErrors);
         $this->assertCheckHasNoErrorsLike($cmdTester, "App\Controller\ProductsController has 1 violations");
@@ -96,10 +107,12 @@ App\Controller\Foo has 1 violations
     {
         $cmdTester = $this->runCheck(__DIR__.'/../_fixtures/configMvcForYieldBug.php');
 
-        $expectedErrors = 'ERRORS!
+        $expectedErrors = <<<STR
+            ERRORS!
 
-App\Controller\Foo has 1 violations
-  should have a name that matches *Controller';
+            App\Controller\Foo has 1 violations
+              should have a name that matches *Controller
+            STR;
 
         $this->assertCheckHasErrors($cmdTester, $expectedErrors);
     }
@@ -212,7 +225,7 @@ App\Controller\Foo has 1 violations
         self::assertJson($display);
 
         self::assertSame(<<<JSON
-        [{"description":"should have a name that matches *Controller because all controllers should be end name with Controller","check_name":"App\\\\Controller\\\\Foo.should-have-a-name-that-matches-controller-because-all-controllers-should-be-end-name-with-controller","fingerprint":"1e960c3f49b5ec63ece40321072ef2bd0bc33ad11b7be326f304255d277dc860","severity":"major","location":{"path":"Controller\/Foo.php","lines":{"begin":1}}}]
+        [{"description":"should have a name that matches *Controller\\nbecause all controllers should be end name with Controller","check_name":"App\\\\Controller\\\\Foo.should-have-a-name-that-matches-controller-because-all-controllers-should-be-end-name-with-controller","fingerprint":"1e960c3f49b5ec63ece40321072ef2bd0bc33ad11b7be326f304255d277dc860","severity":"major","location":{"path":"Controller\/Foo.php","lines":{"begin":1}}}]
 
         JSON, $display);
     }

@@ -27,7 +27,7 @@ class IsTraitTest extends TestCase
         $isFinal->evaluate($classDescription, $violations, $because);
 
         self::assertNotEquals(0, $violations->count());
-        self::assertEquals('HappyIsland should be trait because we want to add this rule for our software', $violationError);
+        self::assertEquals("HappyIsland should be trait\nbecause we want to add this rule for our software", $violationError);
     }
 
     public function test_it_should_return_true_if_is_trait(): void

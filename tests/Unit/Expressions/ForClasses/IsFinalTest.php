@@ -24,7 +24,7 @@ class IsFinalTest extends TestCase
         $because = 'we want to add this rule for our software';
         $violationError = $isFinal->describe($classDescription, $because)->toString();
 
-        self::assertEquals('HappyIsland should be final because we want to add this rule for our software', $violationError);
+        self::assertEquals("HappyIsland should be final\nbecause we want to add this rule for our software", $violationError);
     }
 
     public function test_it_should_return_true_if_is_final(): void
