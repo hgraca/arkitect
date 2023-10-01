@@ -65,7 +65,8 @@ class ArchitectureTest extends AbstractUnitTest
                         }
                     ]
                 }
-                , but should not have those dependencies because components should not directly depend on each other.
+                , but should not have those dependencies because ComponentB must not depend on ComponentA, ComponentC
+                because components should not directly depend on each other.
                 ERROR,
                 null,
                 'ComponentB/ClassBDependingOnAD.php'
