@@ -109,30 +109,51 @@ class Architecture implements
         return $this;
     }
 
-    public function rules(string $because = 'of component architecture'): iterable
+    public function rules(?string $because = null): iterable
     {
         foreach ($this->componentSelectors as $name => $selector) {
             if (isset($this->allowedDependencies[$name])) {
+                $allowedDependenciesWithoutSelf = array_filter(
+                    $this->allowedDependencies[$name],
+                    function ($value) use ($name) {
+                        return $value !== $name;
+                    }
+                );
                 yield Rule::allClasses()
                     ->that(\is_string($selector) ? new ResideInOneOfTheseNamespaces($selector) : $selector)
                     ->should($this->createAllowedExpression(
                         array_merge([$name], $this->allowedDependencies[$name])
                     ))
-                    ->because($because);
+                    ->because(
+                        "$name can only depend on itself"
+                        .(
+                            \count($allowedDependenciesWithoutSelf)
+                            ? ' and on '.implode(', ', $allowedDependenciesWithoutSelf)
+                            : ''
+                        )
+                        .(\is_string($because) ? "\nbecause ".$because : '')
+                    );
             }
 
             if (isset($this->componentDependsOnlyOnTheseComponents[$name])) {
                 yield Rule::allClasses()
                     ->that(\is_string($selector) ? new ResideInOneOfTheseNamespaces($selector) : $selector)
                     ->should($this->createAllowedExpression($this->componentDependsOnlyOnTheseComponents[$name]))
-                    ->because($because);
+                    ->because(
+                        "$name can only depend on "
+                        .implode(', ', $this->componentDependsOnlyOnTheseComponents[$name])
+                        .(\is_string($because) ? "\nbecause ".$because : '')
+                    );
             }
 
             if (isset($this->forbiddenDependencies[$name])) {
                 yield Rule::allClasses()
                     ->that(\is_string($selector) ? new ResideInOneOfTheseNamespaces($selector) : $selector)
                     ->should($this->createForbiddenExpression($this->forbiddenDependencies[$name]))
-                    ->because($because);
+                    ->because(
+                        "$name must not depend on ".implode(', ', $this->forbiddenDependencies[$name])
+                        .(\is_string($because) ? "\nbecause ".$because : '')
+                    );
             }
         }
     }
