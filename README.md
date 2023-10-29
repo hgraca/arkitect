@@ -12,12 +12,11 @@
 1. [Usage](#usage)
 1. [Available rules](#available-rules)
 1. [Rule Builders](#rule-builders)
-1. [Integrations](#integrations)
 1. [Credits](#credits)
 
 # Introduction
 
-PHPArkitect helps you to keep your PHP codebase coherent and solid, by permitting to add some architectural constraint check to your workflow.
+Archcheck helps you to keep your PHP codebase coherent and solid, by permitting to add some architectural constraint check to your workflow.
 You can express the constraint that you want to enforce, in simple and readable PHP code, for example:
 
 ```php
@@ -32,18 +31,7 @@ Rule::allClasses()
 ## Using Composer
 
 ```bash
-composer require --dev phparkitect/phparkitect
-```
-
-## Using a Phar
-Sometimes your project can conflict with one or more of PHPArkitect's dependencies. In that case you may find the Phar (a self-contained PHP executable) useful.
-
-The Phar can be downloaded from GitHub:
-
-```
-wget https://github.com/phparkitect/arkitect/releases/latest/download/phparkitect.phar
-chmod +x phparkitect.phar
-./phparkitect.phar check
+composer require --dev archcheck/archcheck
 ```
 
 # Usage
@@ -51,14 +39,14 @@ chmod +x phparkitect.phar
 To use this tool you need to launch a command via Bash:
 
 ```
-phparkitect check
+archcheck check
 ```
 
-With this command `phparkitect` will search all rules in the root of your project the default config file called `phparkitect.php`.
+With this command `archcheck` will search all rules in the root of your project the default config file called `archcheck.php`.
 You can also specify your configuration file using `--config` option like this:
 
 ```
-phparkitect check --config=/project/yourConfigFile.php
+archcheck check --config=/project/yourConfigFile.php
 ```
 
 By default, a progress bar will show the status of the ongoing analysis.
@@ -71,11 +59,11 @@ you can use the baseline feature to instruct the tool to ignore past violations.
 To create a baseline file, run the `check` command with the `generate-baseline` parameter as follows:
 
 ```
-phparkitect check --generate-baseline
+archcheck check --generate-baseline
 ```
-This will create a `phparkitect-baseline.json`, if you want a different file name you can do it with:
+This will create a `archcheck-baseline.json`, if you want a different file name you can do it with:
 ```
-phparkitect check --generate-baseline=my-baseline.json
+archcheck check --generate-baseline=my-baseline.json
 ```
 
 It will produce a json file with the current list of violations.  
@@ -85,13 +73,13 @@ If is present a baseline file with the default name will be used automatically.
 To use a different baseline file, run the `check` command with the `use-baseline` parameter as follows:
 
 ```
-phparkitect check --use-baseline=my-baseline.json
+archcheck check --use-baseline=my-baseline.json
 ```
 
 To avoid using the default baseline file, you can use the `skip-baseline` option:
 
 ```
-phparkitect check --skip-baseline
+archcheck check --skip-baseline
 ```
 
 ### Line numbers in baseline
@@ -102,25 +90,25 @@ When a line before the offending line changes, the line numbers change and the c
 With the optional flag `ignore-baseline-linenumbers`, you can ignore the line numbers of violations:
 
 ```
-phparkitect check --ignore-baseline-linenumbers
+archcheck check --ignore-baseline-linenumbers
 ```
 
-*Warning*: When ignoring line numbers, phparkitect can no longer discover if a rule is violated additional times in the same file.
+*Warning*: When ignoring line numbers, archcheck can no longer discover if a rule is violated additional times in the same file.
 
 ## Configuration
 
-Example of configuration file `phparkitect.php`
+Example of configuration file `archcheck.php`
 
 ```php
 <?php
 declare(strict_types=1);
 
-use Arkitect\ClassSet;
-use Arkitect\CLI\Config;
-use Arkitect\Expression\ForClasses\HaveNameMatching;
-use Arkitect\Expression\ForClasses\NotHaveDependencyOutsideNamespace;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\Config;
+use Modulith\ArchCheck\Expression\ForClasses\HaveNameMatching;
+use Modulith\ArchCheck\Expression\ForClasses\NotHaveDependencyOutsideNamespace;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\Rules\Rule;
 
 return static function (Config $config): void {
     $mvcClassSet = ClassSet::fromDir(__DIR__.'/mvc');
@@ -141,7 +129,7 @@ return static function (Config $config): void {
         ->add($mvcClassSet, ...$rules);
 };
 ```
-PHPArkitect can detect violations also on DocBlocks custom annotations (like `@Assert\NotBlank` or `@Serializer\Expose`).
+Archcheck can detect violations also on DocBlocks custom annotations (like `@Assert\NotBlank` or `@Serializer\Expose`).
 If you want to disable this feature you can add this simple configuration:
 ```php
 $config->skipParsingCustomAnnotations();
@@ -149,9 +137,9 @@ $config->skipParsingCustomAnnotations();
 
 # Available rules
 
-**Hint**: If you want to test how a Rule work, you can use the command like `phparkitect debug:expression <RuleName> <arguments>` to check which class satisfy the rule in your current folder.
+**Hint**: If you want to test how a Rule work, you can use the command like `archcheck debug:expression <RuleName> <arguments>` to check which class satisfy the rule in your current folder.
 
-For example: `phparkitect debug:expression ResideInOneOfTheseNamespaces App`
+For example: `archcheck debug:expression ResideInOneOfTheseNamespaces App`
 
 ---
 
@@ -415,12 +403,9 @@ You can also define components and ensure that a component:
 - may depend on specific components
 - may depend on any component
 
-Check out [this demo project](https://github.com/phparkitect/arkitect-demo) to get an idea on how write rules.
-
-
 # Rule Builders
 
-PHPArkitect offers some builders that enable you to implement more readable rules for specific contexts. 
+Archcheck offers some builders that enable you to implement more readable rules for specific contexts. 
 
 ### Component Architecture Rule Builder
 
@@ -431,12 +416,12 @@ Thanks to this builder you can define components and enforce dependency constrai
 
 declare(strict_types=1);
 
-use Arkitect\ClassSet;
-use Arkitect\CLI\Config;
-use Arkitect\Expression\ForClasses\HaveNameMatching;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\RuleBuilders\Architecture\Architecture;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\Config;
+use Modulith\ArchCheck\Expression\ForClasses\HaveNameMatching;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\RuleBuilders\Architecture\Architecture;
+use Modulith\ArchCheck\Rules\Rule;
 
 return static function (Config $config): void {
     $classSet = ClassSet::fromDir(__DIR__.'/src');
@@ -477,10 +462,10 @@ You can use wildcards or the exact name of a class.
 
 ## Optional parameters and options
 You can add parameters when you launch the tool. At the moment you can add these parameters and options: 
-* `-v` : with this option you launch Arkitect with the verbose mode to see every parsed file
+* `-v` : with this option you launch ArchCheck with the verbose mode to see every parsed file
 * `--config`: with this parameter, you can specify your config file instead of the default. like this:
 ```
-phparkitect check --config=/project/yourConfigFile.php
+archcheck check --config=/project/yourConfigFile.php
 ```
 * `--target-php-version`: With this parameter, you can specify which PHP version should use the parser. This can be useful to debug problems and to understand if there are problems with a different PHP version.
 Supported PHP versions are: 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2
@@ -497,11 +482,6 @@ $rules[] = Rule::allClasses()
     ->because('we want uniform naming')
     ->runOnlyThis();
 ```
-
-# Integrations
-
-## Laravel
-If you plan to use Arkitect with Laravel, [smortexa](https://github.com/smortexa) wrote a nice wrapper with some predefined rules for laravel: https://github.com/smortexa/laravel-arkitect
 
 # Credits
 
