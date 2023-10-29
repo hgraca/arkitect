@@ -1,19 +1,9 @@
-# 📐 PHPArkitect 
-[![Latest Stable Version](https://poser.pugx.org/phparkitect/phparkitect/v/stable)](https://packagist.org/packages/phparkitect/phparkitect)  ![PHPArkitect](https://github.com/phparkitect/arkitect/workflows/Arkitect/badge.svg?branch=master)
-[![Packagist](https://img.shields.io/packagist/dt/phparkitect/phparkitect.svg)](https://packagist.org/packages/phparkitect/phparkitect)
-[![codecov](https://codecov.io/gh/phparkitect/arkitect/branch/main/graph/badge.svg)](https://codecov.io/gh/phparkitect/arkitect)
+# 📐 ArchCheck 
+[![Software License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![GitLab tag (latest by SemVer)](https://img.shields.io/gitlab/v/tag/hgraca/php-extension?label=version&sort=semver&color=blue)](https://gitlab.com/modulith/arch-check/-/tags)
 
-# CREDITS
-
-
-> This project is a clone of [phparkitect/arkitect](https://github.com/phparkitect/arkitect).
-> 
-> We decided to make a fork because our PRs were becoming stale, 
-which means that either the original project is not maintained or they 
-do not wish to go in the direction we need the project to go.
->
-> In any case, the initial work is commendable and very appreciated.
-
+[![build status](https://gitlab.com/modulith/arch-check/badges/master/pipeline.svg?ignore_skipped=true)](https://gitlab.com/modulith/arch-check/-/pipelines)
+[![coverage report](https://gitlab.com/modulith/arch-check/badges/master/coverage.svg)](https://gitlab.com/modulith/arch-check/commits/master)
 
 # Index
 
@@ -23,6 +13,7 @@ do not wish to go in the direction we need the project to go.
 1. [Available rules](#available-rules)
 1. [Rule Builders](#rule-builders)
 1. [Integrations](#integrations)
+1. [Credits](#credits)
 
 # Introduction
 
@@ -511,3 +502,13 @@ $rules[] = Rule::allClasses()
 
 ## Laravel
 If you plan to use Arkitect with Laravel, [smortexa](https://github.com/smortexa) wrote a nice wrapper with some predefined rules for laravel: https://github.com/smortexa/laravel-arkitect
+
+# Credits
+
+> This project is a clone of [phparkitect/arkitect](https://github.com/phparkitect/arkitect).
+>
+> We decided to make a fork because our PRs were becoming stale,
+which means that either the original project is not maintained or they
+do not wish to go in the direction we need the project to go.
+>
+> In any case, the initial work is commendable and very appreciated.
