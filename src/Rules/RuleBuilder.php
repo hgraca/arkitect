@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Rules;
+namespace Modulith\ArchCheck\Rules;
 
-use Arkitect\Expression\Expression;
+use Modulith\ArchCheck\Expression\Expression;
 
 class RuleBuilder
 {

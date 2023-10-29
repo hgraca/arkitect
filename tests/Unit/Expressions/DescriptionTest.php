@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions;
+namespace Modulith\ArchCheck\Test\Unit\Expressions;
 
-use Arkitect\Expression\Description;
+use Modulith\ArchCheck\Expression\Description;
 use PHPUnit\Framework\TestCase;
 
 class DescriptionTest extends TestCase

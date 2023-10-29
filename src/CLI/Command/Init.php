@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\CLI\Command;
+namespace Modulith\ArchCheck\CLI\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,21 +16,21 @@ class Init extends Command
 
     /** @var string|null */
     public static $defaultDescription = <<< 'EOT'
-Creates a new phparkitect.php file
+Creates a new archcheck.php file
 EOT;
 
     /** @var string */
     public static $help = <<< 'EOT'
-This command creates a new phparkitect.php in the current directory
+This command creates a new archcheck.php in the current directory
 You can customize the directory where the file is created specifying <comment>-d /dest/path</comment>
 EOT;
 
     protected function configure(): void
     {
         $this
-            ->addUsage('creates a phparkitect.php file in the current dir')
-            ->addUsage('--dest-dir=/path/to/dir creates a phparkitect.php file in /path/to/dir')
-            ->addUsage('-d /path/to/dir creates a phparkitect.php file in /path/to/dir')
+            ->addUsage('creates a archcheck.php file in the current dir')
+            ->addUsage('--dest-dir=/path/to/dir creates a archcheck.php file in /path/to/dir')
+            ->addUsage('-d /path/to/dir creates a archcheck.php file in /path/to/dir')
             ->setHelp(self::$help)
             ->addOption(
                 'dest-dir',
@@ -46,14 +46,14 @@ EOT;
         $output->writeln('');
 
         try {
-            $sourceFilePath = __DIR__.'/../../../phparkitect-stub.php';
+            $sourceFilePath = __DIR__.'/../../../archcheck-stub.php';
             /** @psalm-suppress PossiblyInvalidCast $destPath */
             $destPath = (string) $input->getOption('dest-dir');
-            $destFilePath = "$destPath/phparkitect.php";
+            $destFilePath = "$destPath/archcheck.php";
 
             if (file_exists($destFilePath)) {
-                $output->writeln('<info>File</info> phparkitect.php <info>found in current directory, nothing to do</info>');
-                $output->writeln('<info>You are good to go, customize it and run with </info>php bin/phparkitect check');
+                $output->writeln('<info>File</info> archcheck.php <info>found in current directory, nothing to do</info>');
+                $output->writeln('<info>You are good to go, customize it and run with </info>php bin/archcheck check');
 
                 return 0;
             }
@@ -65,14 +65,14 @@ EOT;
                 return -1;
             }
 
-            $output->write('<info>Creating phparkitect.php file...</info>');
+            $output->write('<info>Creating archcheck.php file...</info>');
 
             Assert::file($sourceFilePath);
 
             copy($sourceFilePath, $destFilePath);
 
             $output->writeln('<info> done</info>');
-            $output->writeln('<info>customize it and run with </info>php bin/phparkitect check');
+            $output->writeln('<info>customize it and run with </info>php bin/archcheck check');
         } catch (\Throwable $e) {
             $output->writeln('');
             $output->writeln('<error>Ops, something went wrong: </error>');

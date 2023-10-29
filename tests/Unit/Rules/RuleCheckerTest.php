@@ -1,29 +1,29 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Rules;
+namespace Modulith\ArchCheck\Test\Unit\Rules;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\FileParserFactory;
-use Arkitect\Analyzer\Parser;
-use Arkitect\ClassSet;
-use Arkitect\ClassSetRules;
-use Arkitect\CLI\Progress\VoidProgress;
-use Arkitect\CLI\Runner;
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Expression\ForClasses\HaveNameMatching;
-use Arkitect\Expression\ForClasses\Implement;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\Rules\DSL\ArchRule;
-use Arkitect\Rules\ParsingErrors;
-use Arkitect\Rules\Rule;
-use Arkitect\Rules\Violation;
-use Arkitect\Rules\Violations;
-use Arkitect\Tests\Fixtures\Animal\AnimalInterface;
-use Arkitect\Tests\Fixtures\Fruit\AnimalFruit;
-use Arkitect\Tests\Fixtures\Fruit\CavendishBanana;
-use Arkitect\Tests\Fixtures\Fruit\DwarfCavendishBanana;
-use Arkitect\Tests\Fixtures\Fruit\FruitInterface;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\FileParserFactory;
+use Modulith\ArchCheck\Analyzer\Parser;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\ClassSetRules;
+use Modulith\ArchCheck\CLI\Progress\VoidProgress;
+use Modulith\ArchCheck\CLI\Runner;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Expression\ForClasses\HaveNameMatching;
+use Modulith\ArchCheck\Expression\ForClasses\Implement;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\Rules\DSL\ArchRule;
+use Modulith\ArchCheck\Rules\ParsingErrors;
+use Modulith\ArchCheck\Rules\Rule;
+use Modulith\ArchCheck\Rules\Violation;
+use Modulith\ArchCheck\Rules\Violations;
+use Modulith\ArchCheck\Test\Fixtures\Animal\AnimalInterface;
+use Modulith\ArchCheck\Test\Fixtures\Fruit\AnimalFruit;
+use Modulith\ArchCheck\Test\Fixtures\Fruit\CavendishBanana;
+use Modulith\ArchCheck\Test\Fixtures\Fruit\DwarfCavendishBanana;
+use Modulith\ArchCheck\Test\Fixtures\Fruit\FruitInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -55,13 +55,13 @@ class RuleCheckerTest extends TestCase
 
         $rules[] = Rule::allClasses()
             ->except(FruitInterface::class, CavendishBanana::class, DwarfCavendishBanana::class, AnimalFruit::class)
-            ->that(new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\Fruit'))
+            ->that(new ResideInOneOfTheseNamespaces('Modulith\ArchCheck\Test\Fixtures\Fruit'))
             ->should(new Implement(FruitInterface::class))
             ->because('this tests that string exceptions fail');
 
         $rules[] = Rule::allClasses()
             ->exceptExpression(new HaveNameMatching('*TestCase'))
-            ->that(new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\Animal'))
+            ->that(new ResideInOneOfTheseNamespaces('Modulith\ArchCheck\Test\Fixtures\Animal'))
             ->should(new Implement(AnimalInterface::class))
             ->because('this tests that expression exceptions fail');
 
@@ -84,13 +84,13 @@ class RuleCheckerTest extends TestCase
 
         $rules[] = Rule::allClasses()
             ->except(FruitInterface::class, CavendishBanana::class, AnimalFruit::class)
-            ->that(new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\Fruit'))
+            ->that(new ResideInOneOfTheseNamespaces('Modulith\ArchCheck\Test\Fixtures\Fruit'))
             ->should(new Implement(FruitInterface::class))
             ->because('this tests that string exceptions fail');
 
         $rules[] = Rule::allClasses()
             ->exceptExpression(new HaveNameMatching('*NotExistingSoItFails'))
-            ->that(new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\Animal'))
+            ->that(new ResideInOneOfTheseNamespaces('Modulith\ArchCheck\Test\Fixtures\Animal'))
             ->should(new Implement(AnimalInterface::class))
             ->because('this tests that expression exceptions fail');
 
@@ -105,10 +105,10 @@ class RuleCheckerTest extends TestCase
         );
 
         self::assertCount(2, $violations);
-        $expectedViolations = "Arkitect\Tests\Fixtures\Animal\CatTestCase has 1 violations
-            should implement Arkitect\Tests\Fixtures\Animal\AnimalInterface because this tests
-            that expression exceptions fail Arkitect\Tests\Fixtures\Fruit\DwarfCavendishBanana has 1 violations
-            should implement Arkitect\Tests\Fixtures\Fruit\FruitInterface because
+        $expectedViolations = "Modulith\ArchCheck\Test\Fixtures\Animal\CatTestCase has 1 violations
+            should implement Modulith\ArchCheck\Test\Fixtures\Animal\AnimalInterface because this tests
+            that expression exceptions fail Modulith\ArchCheck\Test\Fixtures\Fruit\DwarfCavendishBanana has 1 violations
+            should implement Modulith\ArchCheck\Test\Fixtures\Fruit\FruitInterface because
             this tests that string exceptions fail";
         self::assertEquals(
             preg_replace('/\s+/', ' ', $expectedViolations),

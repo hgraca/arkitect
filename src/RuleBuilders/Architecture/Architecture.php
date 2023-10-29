@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\RuleBuilders\Architecture;
+namespace Modulith\ArchCheck\RuleBuilders\Architecture;
 
-use Arkitect\Expression\Boolean\Orx;
-use Arkitect\Expression\Expression;
-use Arkitect\Expression\ForClasses\DependsOnlyOnTheseExpressions;
-use Arkitect\Expression\ForClasses\NotDependsOnTheseExpressions;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\Expression\Boolean\Orx;
+use Modulith\ArchCheck\Expression\Expression;
+use Modulith\ArchCheck\Expression\ForClasses\DependsOnlyOnTheseExpressions;
+use Modulith\ArchCheck\Expression\ForClasses\NotDependsOnTheseExpressions;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\Rules\Rule;
 
 class Architecture implements
     Component,

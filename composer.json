@@ -48,18 +48,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Arkitect\\": "src/"
+            "Modulith\\ArchCheck\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Arkitect\\Tests\\": "tests/"
+            "Modulith\\ArchCheck\\Test\\": "tests/"
         }
     },
     "config": {
         "bin-dir": "bin"
     },
     "bin": [
-        "bin-stub/phparkitect"
+        "bin-stub/archcheck"
     ]
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Rules;
+namespace Modulith\ArchCheck\Rules;
 
 class ParsingError
 {

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Analyzer;
+namespace Modulith\ArchCheck\Analyzer;
 
-use Arkitect\Expression\Expression;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Expression\Expression;
+use Modulith\ArchCheck\Rules\Violations;
 
 class ClassDescription
 {

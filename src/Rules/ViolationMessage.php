@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Rules;
+namespace Modulith\ArchCheck\Rules;
 
-use Arkitect\Expression\Description;
+use Modulith\ArchCheck\Expression\Description;
 
 class ViolationMessage
 {

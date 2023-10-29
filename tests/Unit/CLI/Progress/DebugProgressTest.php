@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\CLI\Progress;
+namespace Modulith\ArchCheck\Test\Unit\CLI\Progress;
 
-use Arkitect\ClassSet;
-use Arkitect\CLI\Progress\DebugProgress;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\Progress\DebugProgress;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;
 

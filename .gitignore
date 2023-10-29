@@ -6,7 +6,7 @@
 /web
 /bin/
 !/bin/box.phar
-phparkitect.phar
+archcheck.phar
 composer.lock
 .php-version
 composer.phar

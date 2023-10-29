@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Analyzer;
+namespace Modulith\ArchCheck\Analyzer;
 
-use Arkitect\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
 use PhpParser\NodeTraverser;
 
 class FileParserFactory

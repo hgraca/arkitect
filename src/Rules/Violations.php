@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Rules;
+namespace Modulith\ArchCheck\Rules;
 
-use Arkitect\Exceptions\FailOnFirstViolationException;
-use Arkitect\Exceptions\IndexNotFoundException;
-use Arkitect\Shared\String\IndentationHelper;
+use Modulith\ArchCheck\Exceptions\FailOnFirstViolationException;
+use Modulith\ArchCheck\Exceptions\IndexNotFoundException;
+use Modulith\ArchCheck\Shared\String\IndentationHelper;
 
 class Violations implements \IteratorAggregate, \Countable, \JsonSerializable
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Rules;
+namespace Modulith\ArchCheck\Test\Unit\Rules;
 
-use Arkitect\Exceptions\IndexNotFoundException;
-use Arkitect\Rules\Violation;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Exceptions\IndexNotFoundException;
+use Modulith\ArchCheck\Rules\Violation;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\TestCase;
 
 class ViolationsTest extends TestCase

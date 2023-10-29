@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Rules\DSL;
+namespace Modulith\ArchCheck\Rules\DSL;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Rules\Violations;
 
 interface ArchRule
 {

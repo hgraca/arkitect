@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions;
+namespace Modulith\ArchCheck\Test\Unit\Expressions;
 
-use Arkitect\Expression\Description;
-use Arkitect\Rules\ViolationMessage;
+use Modulith\ArchCheck\Expression\Description;
+use Modulith\ArchCheck\Rules\ViolationMessage;
 use PHPUnit\Framework\TestCase;
 
 class ViolationDescriptionTest extends TestCase

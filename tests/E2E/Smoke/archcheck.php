@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-use Arkitect\ClassSet;
-use Arkitect\CLI\Config;
-use Arkitect\Expression\ForClasses\HaveNameMatching;
-use Arkitect\Expression\ForClasses\Implement;
-use Arkitect\Expression\ForClasses\NotHaveDependencyOutsideNamespace;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\Config;
+use Modulith\ArchCheck\Expression\ForClasses\HaveNameMatching;
+use Modulith\ArchCheck\Expression\ForClasses\Implement;
+use Modulith\ArchCheck\Expression\ForClasses\NotHaveDependencyOutsideNamespace;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\Rules\Rule;
 
 return static function (Config $config): void {
     $mvc_class_set = ClassSet::fromDir(__DIR__.'/../_fixtures/mvc');

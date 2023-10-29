@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Rules\DSL;
+namespace Modulith\ArchCheck\Rules\DSL;
 
 interface BecauseParser
 {

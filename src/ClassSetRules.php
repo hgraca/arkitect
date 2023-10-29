@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect;
+namespace Modulith\ArchCheck;
 
-use Arkitect\Rules\DSL\ArchRule;
+use Modulith\ArchCheck\Rules\DSL\ArchRule;
 
 class ClassSetRules
 {

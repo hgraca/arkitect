@@ -1,4 +1,4 @@
-# Contributing to arkitect
+# Contributing to archCheck
 
 How Can I Contribute?
 
@@ -19,7 +19,7 @@ If you want to propose an enhancements open an issue explaining why you think it
 Once you get a green light implement stuff, create a PR. Remember to provide tests.
 The build must be green for the PR being merged.
 
-## How to develop arkitect
+## How to develop archCheck
 
 In order to fix a bug or submit a new enhancement we suggest to run the build locally or using docker (with the dockerfile provided).
 Some common tasks are available in the Makefile file (you still can use it to see how run things even your system does not support make).
@@ -27,8 +27,8 @@ Some common tasks are available in the Makefile file (you still can use it to se
 To create the docker image and then enter the docker container shell:
 
 ```shell
-docker image build -t phparkitect .
-docker run --rm -it --entrypoint= -v $(PWD):/arkitect phparkitect bash
+docker image build -t archcheck .
+docker run --rm -it --entrypoint= -v $(PWD):/archCheck archcheck bash
 ```
 
 If you prefer use more shorter make commands (use `make` without arguments for help):

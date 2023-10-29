@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Analyzer;
+namespace Modulith\ArchCheck\Analyzer;
 
 use PhpParser\Comment\Doc;
 use PhpParser\ErrorHandler;

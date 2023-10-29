@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Rules;
+namespace Modulith\ArchCheck\Test\Unit\Rules;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\ClassDescriptionBuilder;
-use Arkitect\Expression\Description;
-use Arkitect\Expression\Expression;
-use Arkitect\Rules\Constraints;
-use Arkitect\Rules\Violation;
-use Arkitect\Rules\ViolationMessage;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\ClassDescriptionBuilder;
+use Modulith\ArchCheck\Expression\Description;
+use Modulith\ArchCheck\Expression\Expression;
+use Modulith\ArchCheck\Rules\Constraints;
+use Modulith\ArchCheck\Rules\Violation;
+use Modulith\ArchCheck\Rules\ViolationMessage;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\TestCase;
 
 class ConstraintsTest extends TestCase

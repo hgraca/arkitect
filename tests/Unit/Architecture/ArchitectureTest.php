@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Architecture;
+namespace Modulith\ArchCheck\Test\Unit\Architecture;
 
-use Arkitect\Expression\ForClasses\DependsOnlyOnTheseExpressions;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\RuleBuilders\Architecture\Architecture;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\Expression\ForClasses\DependsOnlyOnTheseExpressions;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\RuleBuilders\Architecture\Architecture;
+use Modulith\ArchCheck\Rules\Rule;
 use PHPUnit\Framework\TestCase;
 
 class ArchitectureTest extends TestCase

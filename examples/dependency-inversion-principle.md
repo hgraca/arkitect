@@ -3,7 +3,7 @@
 In this example, we would like to share some simple rules to apply the dependency inversion principle in your project.
 [Dependency inversion principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle)  is a specific form of loosely coupling software modules.
 
-In the following rules, written into `phparkitect.php` file into the root of a project, we said that:
+In the following rules, written into `archcheck.php` file into the root of a project, we said that:
 ```
 * Domain layer should not depend on other namespaces
 * Application layer should depend on itself and the domain layer. 

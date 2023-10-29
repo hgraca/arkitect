@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\PHPUnit;
+namespace Modulith\ArchCheck\PHPUnit;
 
-use Arkitect\Analyzer\FileParser;
-use Arkitect\Analyzer\FileParserFactory;
-use Arkitect\ClassSet;
-use Arkitect\ClassSetRules;
-use Arkitect\CLI\Progress\VoidProgress;
-use Arkitect\CLI\Runner;
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Rules\ArchRule;
-use Arkitect\Rules\ParsingErrors;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\FileParser;
+use Modulith\ArchCheck\Analyzer\FileParserFactory;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\ClassSetRules;
+use Modulith\ArchCheck\CLI\Progress\VoidProgress;
+use Modulith\ArchCheck\CLI\Runner;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Rules\ArchRule;
+use Modulith\ArchCheck\Rules\ParsingErrors;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\Constraint\Constraint;
 
 class ArchRuleCheckerConstraintAdapter extends Constraint

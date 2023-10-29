@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions\ForClasses;
+namespace Modulith\ArchCheck\Test\Unit\Expressions\ForClasses;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\ClassDescriptionBuilder;
-use Arkitect\Analyzer\FullyQualifiedClassName;
-use Arkitect\Expression\ForClasses\Extend;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\ClassDescriptionBuilder;
+use Modulith\ArchCheck\Analyzer\FullyQualifiedClassName;
+use Modulith\ArchCheck\Expression\ForClasses\Extend;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\TestCase;
 
 class ExtendTest extends TestCase

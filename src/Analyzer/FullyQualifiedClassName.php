@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Analyzer;
+namespace Modulith\ArchCheck\Analyzer;
 
-use Arkitect\Exceptions\InvalidPatternException;
+use Modulith\ArchCheck\Exceptions\InvalidPatternException;
 
 class FullyQualifiedClassName
 {

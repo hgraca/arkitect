@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\RuleBuilders\Architecture;
+namespace Modulith\ArchCheck\RuleBuilders\Architecture;
 
-use Arkitect\Rules\DSL\ArchRule;
+use Modulith\ArchCheck\Rules\DSL\ArchRule;
 
 interface Rules
 {

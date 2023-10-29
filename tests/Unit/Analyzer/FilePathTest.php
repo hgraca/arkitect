@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Analyzer;
+namespace Modulith\ArchCheck\Test\Unit\Analyzer;
 
-use Arkitect\Analyzer\FilePath;
+use Modulith\ArchCheck\Analyzer\FilePath;
 use PHPUnit\Framework\TestCase;
 
 class FilePathTest extends TestCase

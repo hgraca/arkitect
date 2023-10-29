@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Fixtures\Fruit;
+namespace Modulith\ArchCheck\Test\Fixtures\Fruit;
 
-use Arkitect\Tests\Fixtures\Animal\Cat;
+use Modulith\ArchCheck\Test\Fixtures\Animal\Cat;
 
 final class AnimalFruit extends Banana
 {

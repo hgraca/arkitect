@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\CLI;
+namespace Modulith\ArchCheck\Test\Unit\CLI;
 
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Exceptions\PhpVersionNotValidException;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Exceptions\PhpVersionNotValidException;
 use PHPUnit\Framework\TestCase;
 
 class TargetPhpVersionTest extends TestCase

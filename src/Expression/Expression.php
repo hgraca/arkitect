@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Expression;
+namespace Modulith\ArchCheck\Expression;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Rules\Violations;
 
 /**
  * A class implementing this interface represents a property a php class may or may not have.

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\CLI\Progress;
+namespace Modulith\ArchCheck\CLI\Progress;
 
-use Arkitect\ClassSet;
+use Modulith\ArchCheck\ClassSet;
 
 interface Progress
 {

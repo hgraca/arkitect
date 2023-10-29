@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions\ForClasses;
+namespace Modulith\ArchCheck\Test\Unit\Expressions\ForClasses;
 
-use Arkitect\Analyzer\ClassDescriptionBuilder;
-use Arkitect\Expression\ForClasses\IsMapped;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescriptionBuilder;
+use Modulith\ArchCheck\Expression\ForClasses\IsMapped;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\TestCase;
 
 final class IsMappedTest extends TestCase

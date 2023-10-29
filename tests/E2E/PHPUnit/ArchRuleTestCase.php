@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\E2E\PHPUnit;
+namespace Modulith\ArchCheck\Test\E2E\PHPUnit;
 
-use Arkitect\ClassSet;
-use Arkitect\PHPUnit\ArchRuleCheckerConstraintAdapter;
-use Arkitect\Rules\DSL\ArchRule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\PHPUnit\ArchRuleCheckerConstraintAdapter;
+use Modulith\ArchCheck\Rules\DSL\ArchRule;
 use PHPUnit\Framework\TestCase;
 
 class ArchRuleTestCase extends TestCase

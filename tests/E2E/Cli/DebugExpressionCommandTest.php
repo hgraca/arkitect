@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\E2E\Cli;
+namespace Modulith\ArchCheck\Test\E2E\Cli;
 
-use Arkitect\CLI\PhpArkitectApplication;
+use Modulith\ArchCheck\CLI\Application;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
@@ -83,7 +83,7 @@ END;
 
     private function createAppTester(): ApplicationTester
     {
-        $app = new PhpArkitectApplication();
+        $app = new Application();
         $app->setAutoExit(false);
 
         return new ApplicationTester($app);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Fixtures\ComponentC\ComponentCA;
+namespace Modulith\ArchCheck\Test\Fixtures\ComponentC\ComponentCA;
 
 final class ClassCAWithoutDependencies
 {

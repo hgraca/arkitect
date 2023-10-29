@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\CLI\Command;
+namespace Modulith\ArchCheck\CLI\Command;
 
-use Arkitect\CLI\Config;
-use Arkitect\CLI\Progress\DebugProgress;
-use Arkitect\CLI\Progress\ProgressBarProgress;
-use Arkitect\CLI\Runner;
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Exceptions\FailOnFirstViolationException;
-use Arkitect\Rules\ParsingErrors;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\CLI\Config;
+use Modulith\ArchCheck\CLI\Progress\DebugProgress;
+use Modulith\ArchCheck\CLI\Progress\ProgressBarProgress;
+use Modulith\ArchCheck\CLI\Runner;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Exceptions\FailOnFirstViolationException;
+use Modulith\ArchCheck\Rules\ParsingErrors;
+use Modulith\ArchCheck\Rules\Violations;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -28,9 +28,9 @@ class Check extends Command
     private const IGNORE_BASELINE_LINENUMBERS_PARAM = 'ignore-baseline-linenumbers';
 
     private const GENERATE_BASELINE_PARAM = 'generate-baseline';
-    private const DEFAULT_RULES_FILENAME = 'phparkitect.php';
+    private const DEFAULT_RULES_FILENAME = 'archcheck.php';
 
-    private const DEFAULT_BASELINE_FILENAME = 'phparkitect-baseline.json';
+    private const DEFAULT_BASELINE_FILENAME = 'archcheck-baseline.json';
 
     private const SUCCESS_CODE = 0;
     private const ERROR_CODE = 1;
@@ -202,7 +202,7 @@ class Check extends Command
 
         $version = $app ? $app->getVersion() : 'unknown';
 
-        $output->writeln("<info>PHPArkitect $version</info>\n");
+        $output->writeln("<info>Archcheck $version</info>\n");
     }
 
     protected function printExecutionTime(OutputInterface $output, float $startTime): void

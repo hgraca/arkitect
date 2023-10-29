@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Fixtures\ComponentA;
+namespace Modulith\ArchCheck\Test\Fixtures\ComponentA;
 
 final class ClassAWithoutDependencies
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Shared\String;
+namespace Modulith\ArchCheck\Shared\String;
 
 final class IndentationHelper
 {

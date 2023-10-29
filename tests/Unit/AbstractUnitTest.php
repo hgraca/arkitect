@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit;
+namespace Modulith\ArchCheck\Test\Unit;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\FileParserFactory;
-use Arkitect\Exceptions\ClassFileNotFoundException;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\FileParserFactory;
+use Modulith\ArchCheck\Exceptions\ClassFileNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractUnitTest extends TestCase

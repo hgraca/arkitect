@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit;
+namespace Modulith\ArchCheck\Test\Unit;
 
-use Arkitect\ClassSet;
-use Arkitect\ClassSetRules;
-use Arkitect\Expression\ForClasses\HaveNameMatching;
-use Arkitect\Expression\ForClasses\Implement;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\ClassSetRules;
+use Modulith\ArchCheck\Expression\ForClasses\HaveNameMatching;
+use Modulith\ArchCheck\Expression\ForClasses\Implement;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\Rules\Rule;
 use PHPUnit\Framework\TestCase;
 
 class ClassSetRulesTest extends TestCase

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Analyzer;
+namespace Modulith\ArchCheck\Test\Unit\Analyzer;
 
-use Arkitect\Analyzer\FileParser;
-use Arkitect\Analyzer\FileVisitor;
-use Arkitect\Analyzer\NameResolver;
-use Arkitect\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Analyzer\FileParser;
+use Modulith\ArchCheck\Analyzer\FileVisitor;
+use Modulith\ArchCheck\Analyzer\NameResolver;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
 use PhpParser\NodeTraverser;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;

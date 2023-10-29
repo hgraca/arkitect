@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Fixtures\Fruit;
+namespace Modulith\ArchCheck\Test\Fixtures\Fruit;
 
 class Banana implements FruitInterface
 {

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Analyzer;
+namespace Modulith\ArchCheck\Test\Unit\Analyzer;
 
-use Arkitect\Analyzer\FullyQualifiedClassName;
+use Modulith\ArchCheck\Analyzer\FullyQualifiedClassName;
 use PHPUnit\Framework\TestCase;
 
 class FullyQualifiedClassNameTest extends TestCase

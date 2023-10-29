@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Analyzer;
+namespace Modulith\ArchCheck\Test\Unit\Analyzer;
 
-use Arkitect\Analyzer\PatternString;
+use Modulith\ArchCheck\Analyzer\PatternString;
 use PHPUnit\Framework\TestCase;
 
 class PatternStringTest extends TestCase

@@ -1,13 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\CLI\Command;
+namespace Modulith\ArchCheck\CLI\Command;
 
-use Arkitect\Analyzer\FileParserFactory;
-use Arkitect\ClassSet;
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Rules\ParsingError;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\FileParser;
+use Modulith\ArchCheck\Analyzer\FileParserFactory;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Exceptions\PhpVersionNotValidException;
+use Modulith\ArchCheck\Rules\ParsingError;
+use Modulith\ArchCheck\Rules\Violations;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -62,7 +64,7 @@ EOT;
 
             $ruleName = $input->getArgument('expression');
             /** @var class-string $ruleFQCN */
-            $ruleFQCN = 'Arkitect\Expression\ForClasses\\'.$ruleName;
+            $ruleFQCN = 'Modulith\ArchCheck\Expression\ForClasses\\'.$ruleName;
             $arguments = $input->getArgument('arguments');
 
             $argumentError = $this->getArgumentsError($arguments, $ruleName, $ruleFQCN);
@@ -86,9 +88,9 @@ EOT;
     }
 
     /**
-     * @throws \Arkitect\Exceptions\PhpVersionNotValidException
+     * @throws PhpVersionNotValidException
      */
-    private function getParser(InputInterface $input): \Arkitect\Analyzer\FileParser
+    private function getParser(InputInterface $input): FileParser
     {
         $phpVersion = $input->getOption('target-php-version');
         $targetPhpVersion = TargetPhpVersion::create($phpVersion);
@@ -97,7 +99,7 @@ EOT;
         return $fileParser;
     }
 
-    private function showParsingErrors(\Arkitect\Analyzer\FileParser $fileParser, OutputInterface $output): void
+    private function showParsingErrors(FileParser $fileParser, OutputInterface $output): void
     {
         $parsedErrors = $fileParser->getParsingErrors();
 

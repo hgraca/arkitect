@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit;
+namespace Modulith\ArchCheck\Test\Unit;
 
-use Arkitect\Glob;
+use Modulith\ArchCheck\Glob;
 use PHPUnit\Framework\TestCase;
 
 class GlobTest extends TestCase

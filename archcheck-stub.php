@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Arkitect\ClassSet;
-use Arkitect\CLI\Config;
-use Arkitect\Expression\ForClasses\HaveNameMatching;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\RuleBuilders\Architecture\Architecture;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\Config;
+use Modulith\ArchCheck\Expression\ForClasses\HaveNameMatching;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\RuleBuilders\Architecture\Architecture;
+use Modulith\ArchCheck\Rules\Rule;
 
 return static function (Config $config): void {
     $classSet = ClassSet::fromDir(__DIR__.'/src');

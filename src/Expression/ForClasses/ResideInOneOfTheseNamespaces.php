@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Expression\ForClasses;
+namespace Modulith\ArchCheck\Expression\ForClasses;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Expression\Description;
-use Arkitect\Expression\Expression;
-use Arkitect\Expression\MergeableExpression;
-use Arkitect\Rules\Violation;
-use Arkitect\Rules\ViolationMessage;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Expression\Description;
+use Modulith\ArchCheck\Expression\Expression;
+use Modulith\ArchCheck\Expression\MergeableExpression;
+use Modulith\ArchCheck\Rules\Violation;
+use Modulith\ArchCheck\Rules\ViolationMessage;
+use Modulith\ArchCheck\Rules\Violations;
 
 class ResideInOneOfTheseNamespaces implements Expression, MergeableExpression
 {

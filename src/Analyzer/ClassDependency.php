@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Analyzer;
+namespace Modulith\ArchCheck\Analyzer;
 
-use Arkitect\Exceptions\ClassFileNotFoundException;
+use Modulith\ArchCheck\Exceptions\ClassFileNotFoundException;
 
 class ClassDependency
 {
     /** @var int */
     private $line;
 
-    /** @var \Arkitect\Analyzer\FullyQualifiedClassName */
+    /** @var FullyQualifiedClassName */
     private $FQCN;
 
     public function __construct(string $FQCN, int $line)

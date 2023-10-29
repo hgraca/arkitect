@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\E2E;
+namespace Modulith\ArchCheck\Test\E2E\Smoke;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 
-class RunArkitectBinTest extends TestCase
+class RunArchCheckBinTest extends TestCase
 {
     const SUCCESS_CODE = 0;
 
     const ERROR_CODE = 1;
 
     /** @var string */
-    private $phparkitect = __DIR__.'/../../../bin-stub/phparkitect';
+    private $archcheck = __DIR__.'/../../../bin-stub/archcheck';
 
     public function test_returns_error_with_multiple_violations(): void
     {
@@ -128,7 +128,7 @@ App\Controller\Foo has 1 violations
 
     protected function runArkitectPassingConfigFilePath($configFilePath): Process
     {
-        $process = new Process([$this->phparkitect, 'check', '--config='.$configFilePath], __DIR__);
+        $process = new Process([$this->archcheck, 'check', '--config='.$configFilePath], __DIR__);
         $process->run();
 
         return $process;
@@ -136,7 +136,7 @@ App\Controller\Foo has 1 violations
 
     protected function runArkitect(): Process
     {
-        $process = new Process([$this->phparkitect, 'check'], __DIR__);
+        $process = new Process([$this->archcheck, 'check'], __DIR__);
         $process->run();
 
         return $process;

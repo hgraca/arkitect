@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Analyzer;
+namespace Modulith\ArchCheck\Test\Unit\Analyzer;
 
-use Arkitect\Analyzer\ClassDependency;
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\FileParser;
-use Arkitect\Analyzer\FileParserFactory;
-use Arkitect\Analyzer\FullyQualifiedClassName;
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Expression\ForClasses\DependsOnlyOnTheseNamespaces;
-use Arkitect\Expression\ForClasses\Implement;
-use Arkitect\Expression\ForClasses\NotContainDocBlockLike;
-use Arkitect\Expression\ForClasses\NotHaveDependencyOutsideNamespace;
-use Arkitect\Rules\ParsingError;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDependency;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\FileParser;
+use Modulith\ArchCheck\Analyzer\FileParserFactory;
+use Modulith\ArchCheck\Analyzer\FullyQualifiedClassName;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Expression\ForClasses\DependsOnlyOnTheseNamespaces;
+use Modulith\ArchCheck\Expression\ForClasses\Implement;
+use Modulith\ArchCheck\Expression\ForClasses\NotContainDocBlockLike;
+use Modulith\ArchCheck\Expression\ForClasses\NotHaveDependencyOutsideNamespace;
+use Modulith\ArchCheck\Rules\ParsingError;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\TestCase;
 
 class FileVisitorTest extends TestCase

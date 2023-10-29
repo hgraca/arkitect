@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use Arkitect\ClassSet;
-use Arkitect\CLI\Config;
-use Arkitect\Expression\ForClasses\NotImplement;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\Config;
+use Modulith\ArchCheck\Expression\ForClasses\NotImplement;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\Rules\Rule;
 
 return static function (Config $config): void {
     $classSet = ClassSet::fromDir(__DIR__.'/parse_error');

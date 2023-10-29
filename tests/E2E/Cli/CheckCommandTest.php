@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\E2E\Cli;
+namespace Modulith\ArchCheck\Test\E2E\Cli;
 
-use Arkitect\CLI\PhpArkitectApplication;
+use Modulith\ArchCheck\CLI\Application;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
@@ -16,7 +16,7 @@ class CheckCommandTest extends TestCase
 
     /** @var string */
     private $customBaselineFilename = __DIR__.'/my-baseline.json';
-    private $defaultBaselineFilename = 'phparkitect-baseline.json';
+    private $defaultBaselineFilename = 'archcheck-baseline.json';
 
     protected function tearDown(): void
     {
@@ -186,7 +186,7 @@ App\Controller\Foo has 1 violations
             $input['--generate-baseline'] = $generateBaseline;
         }
 
-        $app = new PhpArkitectApplication();
+        $app = new Application();
         $app->setAutoExit(false);
 
         $appTester = new ApplicationTester($app);

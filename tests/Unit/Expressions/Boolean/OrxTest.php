@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions\Boolean;
+namespace Modulith\ArchCheck\Test\Unit\Expressions\Boolean;
 
-use Arkitect\Analyzer\ClassDescriptionBuilder;
-use Arkitect\Expression\Boolean\Orx;
-use Arkitect\Expression\ForClasses\Extend;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescriptionBuilder;
+use Modulith\ArchCheck\Expression\Boolean\Orx;
+use Modulith\ArchCheck\Expression\ForClasses\Extend;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\TestCase;
 
 final class OrxTest extends TestCase

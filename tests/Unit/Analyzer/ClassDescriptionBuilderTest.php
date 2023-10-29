@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Analyzer;
+namespace Modulith\ArchCheck\Test\Unit\Analyzer;
 
-use Arkitect\Analyzer\ClassDependency;
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\ClassDescriptionBuilder;
-use Arkitect\Analyzer\FullyQualifiedClassName;
+use Modulith\ArchCheck\Analyzer\ClassDependency;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\ClassDescriptionBuilder;
+use Modulith\ArchCheck\Analyzer\FullyQualifiedClassName;
 use PHPUnit\Framework\TestCase;
 
 class ClassDescriptionBuilderTest extends TestCase

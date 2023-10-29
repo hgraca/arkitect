@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Rules;
+namespace Modulith\ArchCheck\Rules;
 
-use Arkitect\Exceptions\IndexNotFoundException;
+use Modulith\ArchCheck\Exceptions\IndexNotFoundException;
 
 class ParsingErrors implements \IteratorAggregate, \Countable
 {

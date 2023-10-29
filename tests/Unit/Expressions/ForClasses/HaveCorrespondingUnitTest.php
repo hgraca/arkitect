@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions\ForClasses;
+namespace Modulith\ArchCheck\Test\Unit\Expressions\ForClasses;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\FullyQualifiedClassName;
-use Arkitect\Expression\ForClasses\HaveCorrespondingUnit;
-use Arkitect\Rules\Violations;
-use Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\Cat;
-use Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\Dog;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\FullyQualifiedClassName;
+use Modulith\ArchCheck\Expression\ForClasses\HaveCorrespondingUnit;
+use Modulith\ArchCheck\Rules\Violations;
+use Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\Cat;
+use Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\Dog;
 use PHPUnit\Framework\TestCase;
 
 class HaveCorrespondingUnitTest extends TestCase
@@ -70,7 +70,7 @@ class HaveCorrespondingUnitTest extends TestCase
         $violationError = $constraint->describe($classDescription, $because)->toString();
         $this->assertEquals(
             'should have a matching unit named: '
-            ."'Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\DogTestCase'\nbecause $because",
+            ."'Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\DogTestCase'\nbecause $because",
             $violationError
         );
     }

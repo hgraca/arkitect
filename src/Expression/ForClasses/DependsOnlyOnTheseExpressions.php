@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Expression\ForClasses;
+namespace Modulith\ArchCheck\Expression\ForClasses;
 
-use Arkitect\Analyzer\ClassDependencyCollection;
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Exceptions\ClassFileNotFoundException;
-use Arkitect\Exceptions\FailOnFirstViolationException;
-use Arkitect\Expression\Description;
-use Arkitect\Expression\Expression;
-use Arkitect\Expression\ExpressionCollection;
-use Arkitect\Rules\Violation;
-use Arkitect\Rules\ViolationMessage;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDependencyCollection;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Exceptions\ClassFileNotFoundException;
+use Modulith\ArchCheck\Exceptions\FailOnFirstViolationException;
+use Modulith\ArchCheck\Expression\Description;
+use Modulith\ArchCheck\Expression\Expression;
+use Modulith\ArchCheck\Expression\ExpressionCollection;
+use Modulith\ArchCheck\Rules\Violation;
+use Modulith\ArchCheck\Rules\ViolationMessage;
+use Modulith\ArchCheck\Rules\Violations;
 
 class DependsOnlyOnTheseExpressions implements Expression
 {

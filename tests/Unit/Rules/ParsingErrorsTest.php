@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Rules;
+namespace Modulith\ArchCheck\Test\Unit\Rules;
 
-use Arkitect\Exceptions\IndexNotFoundException;
-use Arkitect\Rules\ParsingError;
-use Arkitect\Rules\ParsingErrors;
+use Modulith\ArchCheck\Exceptions\IndexNotFoundException;
+use Modulith\ArchCheck\Rules\ParsingError;
+use Modulith\ArchCheck\Rules\ParsingErrors;
 use PHPUnit\Framework\TestCase;
 
 class ParsingErrorsTest extends TestCase

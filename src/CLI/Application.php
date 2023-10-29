@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\CLI;
+namespace Modulith\ArchCheck\CLI;
 
-use Arkitect\CLI\Command\Check;
-use Arkitect\CLI\Command\DebugExpression;
-use Arkitect\CLI\Command\Init;
+use Modulith\ArchCheck\CLI\Command\Check;
+use Modulith\ArchCheck\CLI\Command\DebugExpression;
+use Modulith\ArchCheck\CLI\Command\Init;
 
-class PhpArkitectApplication extends \Symfony\Component\Console\Application
+class Application extends \Symfony\Component\Console\Application
 {
     /** @var string */
     private static $logo = <<< 'EOD'
@@ -20,7 +20,7 @@ EOD;
 
     public function __construct()
     {
-        parent::__construct('PHPArkitect', Version::get());
+        parent::__construct('Archcheck', Version::get());
         $this->add(new Check());
         $this->add(new Init());
         $this->add(new DebugExpression());

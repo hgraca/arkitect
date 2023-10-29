@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Rules;
+namespace Modulith\ArchCheck\Rules;
 
-use Arkitect\Rules\DSL\ArchRule;
-use Arkitect\Rules\DSL\BecauseParser;
+use Modulith\ArchCheck\Rules\DSL\ArchRule;
+use Modulith\ArchCheck\Rules\DSL\BecauseParser;
 
 class Because implements BecauseParser
 {

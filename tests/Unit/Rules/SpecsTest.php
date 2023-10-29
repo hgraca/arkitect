@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Rules;
+namespace Modulith\ArchCheck\Test\Unit\Rules;
 
-use Arkitect\Analyzer\ClassDependency;
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Expression\ForClasses\HaveNameMatching;
-use Arkitect\Rules\Specs;
+use Modulith\ArchCheck\Analyzer\ClassDependency;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Expression\ForClasses\HaveNameMatching;
+use Modulith\ArchCheck\Rules\Specs;
 use PHPUnit\Framework\TestCase;
 
 class SpecsTest extends TestCase

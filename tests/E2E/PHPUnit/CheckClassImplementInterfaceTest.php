@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Tests\E2E\PHPUnit;
+namespace Modulith\ArchCheck\Test\E2E\PHPUnit;
 
-use Arkitect\ClassSet;
-use Arkitect\Expression\ForClasses\Implement;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\Rules\Rule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\Expression\ForClasses\Implement;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\Rules\Rule;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 

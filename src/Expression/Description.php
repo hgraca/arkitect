@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Expression;
+namespace Modulith\ArchCheck\Expression;
 
 class Description
 {

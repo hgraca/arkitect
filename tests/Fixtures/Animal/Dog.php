@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Fixtures\Animal;
+namespace Modulith\ArchCheck\Test\Fixtures\Animal;
 
 final class Dog implements AnimalInterface
 {

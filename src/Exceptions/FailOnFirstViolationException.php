@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Exceptions;
+namespace Modulith\ArchCheck\Exceptions;
 
 class FailOnFirstViolationException extends \Exception
 {

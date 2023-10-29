@@ -2,30 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\RuleBuilders\Architecture;
+namespace Modulith\ArchCheck\Test\Unit\RuleBuilders\Architecture;
 
-use Arkitect\ClassSet;
-use Arkitect\CLI\Config;
-use Arkitect\CLI\Progress\VoidProgress;
-use Arkitect\CLI\Runner;
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Expression\Boolean\Andx;
-use Arkitect\Expression\ForClasses\NotResideInTheseNamespaces;
-use Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces;
-use Arkitect\RuleBuilders\Architecture\Architecture;
-use Arkitect\Tests\Unit\AbstractUnitTest;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\CLI\Config;
+use Modulith\ArchCheck\CLI\Progress\VoidProgress;
+use Modulith\ArchCheck\CLI\Runner;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Expression\Boolean\Andx;
+use Modulith\ArchCheck\Expression\ForClasses\NotResideInTheseNamespaces;
+use Modulith\ArchCheck\Expression\ForClasses\ResideInOneOfTheseNamespaces;
+use Modulith\ArchCheck\RuleBuilders\Architecture\Architecture;
+use Modulith\ArchCheck\Test\Unit\AbstractUnitTest;
 
 class ArchitectureTest extends AbstractUnitTest
 {
     public function test_it_should_see_violations_only_outside_exclusions(): void
     {
         $rules = Architecture::withComponents()
-            ->component('ComponentA')->definedBy('Arkitect\Tests\Fixtures\ComponentA\\')
-            ->component('ComponentB')->definedBy('Arkitect\Tests\Fixtures\ComponentB\\')
+            ->component('ComponentA')->definedBy('Modulith\ArchCheck\Test\Fixtures\ComponentA\\')
+            ->component('ComponentB')->definedBy('Modulith\ArchCheck\Test\Fixtures\ComponentB\\')
             ->component('ComponentC')->definedByExpression(
                 new Andx(
-                    new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\ComponentC\\'),
-                    new NotResideInTheseNamespaces('Arkitect\Tests\Fixtures\ComponentC\ComponentCA\\')
+                    new ResideInOneOfTheseNamespaces('Modulith\ArchCheck\Test\Fixtures\ComponentC\\'),
+                    new NotResideInTheseNamespaces('Modulith\ArchCheck\Test\Fixtures\ComponentC\ComponentCA\\')
                 )
             )
             ->where('ComponentA')->mustNotDependOnComponents('ComponentB', 'ComponentC')
@@ -42,15 +42,15 @@ class ArchitectureTest extends AbstractUnitTest
         self::assertEquals(1, $violations->count(), $violations->toString());
         $violationsText = $violations->toString();
         self::assertStringContainsString(
-            'Arkitect\Tests\Fixtures\ComponentB\ClassBDependingOnAD has 1 violations',
+            'Modulith\ArchCheck\Test\Fixtures\ComponentB\ClassBDependingOnAD has 1 violations',
             $violationsText
         );
         self::assertStringContainsString(
-            "The dependency 'Arkitect\Tests\Fixtures\ComponentA\ClassAWithoutDependencies' violated the expression:",
+            "The dependency 'Modulith\ArchCheck\Test\Fixtures\ComponentA\ClassAWithoutDependencies' violated the expression:",
             $violationsText
         );
         self::assertStringContainsString(
-            'NOT resides in one of these namespaces: Arkitect\Tests\Fixtures\ComponentA\\',
+            'NOT resides in one of these namespaces: Modulith\ArchCheck\Test\Fixtures\ComponentA\\',
             $violationsText
         );
     }

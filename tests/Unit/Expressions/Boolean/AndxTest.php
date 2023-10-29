@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions\Boolean;
+namespace Modulith\ArchCheck\Test\Unit\Expressions\Boolean;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\ClassDescriptionBuilder;
-use Arkitect\Analyzer\FullyQualifiedClassName;
-use Arkitect\Expression\Boolean\Andx;
-use Arkitect\Expression\ForClasses\Extend;
-use Arkitect\Expression\ForClasses\Implement;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\ClassDescriptionBuilder;
+use Modulith\ArchCheck\Analyzer\FullyQualifiedClassName;
+use Modulith\ArchCheck\Expression\Boolean\Andx;
+use Modulith\ArchCheck\Expression\ForClasses\Extend;
+use Modulith\ArchCheck\Expression\ForClasses\Implement;
+use Modulith\ArchCheck\Rules\Violations;
 use PHPUnit\Framework\TestCase;
 
 class AndxTest extends TestCase

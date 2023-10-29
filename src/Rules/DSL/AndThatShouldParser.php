@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Rules\DSL;
+namespace Modulith\ArchCheck\Rules\DSL;
 
-use Arkitect\Expression\Expression;
+use Modulith\ArchCheck\Expression\Expression;
 
 interface AndThatShouldParser
 {

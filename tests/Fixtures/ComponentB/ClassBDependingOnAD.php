@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Fixtures\ComponentB;
+namespace Modulith\ArchCheck\Test\Fixtures\ComponentB;
 
-use Arkitect\Tests\Fixtures\ComponentA\ClassAWithoutDependencies;
-use Arkitect\Tests\Fixtures\ComponentC\ComponentCA\ClassCAWithoutDependencies;
+use Modulith\ArchCheck\Test\Fixtures\ComponentA\ClassAWithoutDependencies;
+use Modulith\ArchCheck\Test\Fixtures\ComponentC\ComponentCA\ClassCAWithoutDependencies;
 
 final class ClassBDependingOnAD
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect;
+namespace Modulith\ArchCheck;
 
 use Symfony\Component\Finder\Finder;
 

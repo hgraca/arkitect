@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\CLI;
+namespace Modulith\ArchCheck\CLI;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\FileParser;
-use Arkitect\Analyzer\FileParserFactory;
-use Arkitect\Analyzer\Parser;
-use Arkitect\ClassSetRules;
-use Arkitect\CLI\Progress\Progress;
-use Arkitect\Rules\ParsingErrors;
-use Arkitect\Rules\Violations;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\FileParser;
+use Modulith\ArchCheck\Analyzer\FileParserFactory;
+use Modulith\ArchCheck\Analyzer\Parser;
+use Modulith\ArchCheck\ClassSetRules;
+use Modulith\ArchCheck\CLI\Progress\Progress;
+use Modulith\ArchCheck\Rules\ParsingErrors;
+use Modulith\ArchCheck\Rules\Violations;
 use Symfony\Component\Finder\SplFileInfo;
 
 class Runner

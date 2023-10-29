@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Analyzer;
+namespace Modulith\ArchCheck\Analyzer;
 
 class PatternString
 {

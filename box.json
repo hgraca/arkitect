@@ -1,6 +1,6 @@
 {
   "banner": [
-    "Arkitect"
+    "ArchCheck"
   ],
   "directories": [
     "src",
@@ -8,14 +8,14 @@
   ],
   "files": [
     "composer.json",
-    "phparkitect-stub.php"
+    "archcheck-stub.php"
   ],
   "compression": "GZ",
   "compactors": [
     "KevinGH\\Box\\Compactor\\Json"
   ],
-  "main": "bin-stub/phparkitect",
-  "output": "phparkitect.phar",
+  "main": "bin-stub/archcheck",
+  "output": "archcheck.phar",
   "datetime": "release-date",
   "dump-autoload": true,
   "exclude-composer-files": false

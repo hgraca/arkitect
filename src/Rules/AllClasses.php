@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Rules;
+namespace Modulith\ArchCheck\Rules;
 
-use Arkitect\Expression\Expression;
-use Arkitect\Rules\DSL\AndThatShouldParser;
-use Arkitect\Rules\DSL\ThatParser;
+use Modulith\ArchCheck\Expression\Expression;
+use Modulith\ArchCheck\Rules\DSL\AndThatShouldParser;
+use Modulith\ArchCheck\Rules\DSL\ThatParser;
 
 class AllClasses implements ThatParser
 {

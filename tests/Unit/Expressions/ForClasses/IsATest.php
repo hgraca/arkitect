@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit\Expressions\ForClasses;
+namespace Modulith\ArchCheck\Test\Unit\Expressions\ForClasses;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\FullyQualifiedClassName;
-use Arkitect\Expression\ForClasses\IsA;
-use Arkitect\Rules\Violations;
-use Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\Banana;
-use Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\CavendishBanana;
-use Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\Dog;
-use Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\DwarfCavendishBanana;
-use Arkitect\Tests\Unit\Expressions\ForClasses\DummyClasses\FruitInterface;
+use Modulith\ArchCheck\Analyzer\ClassDescription;
+use Modulith\ArchCheck\Analyzer\FullyQualifiedClassName;
+use Modulith\ArchCheck\Expression\ForClasses\IsA;
+use Modulith\ArchCheck\Rules\Violations;
+use Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\Banana;
+use Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\CavendishBanana;
+use Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\Dog;
+use Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\DwarfCavendishBanana;
+use Modulith\ArchCheck\Test\Unit\Expressions\ForClasses\DummyClasses\FruitInterface;
 use PHPUnit\Framework\TestCase;
 
 final class IsATest extends TestCase

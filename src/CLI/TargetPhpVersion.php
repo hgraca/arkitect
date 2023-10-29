@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\CLI;
+namespace Modulith\ArchCheck\CLI;
 
-use Arkitect\Exceptions\PhpVersionNotValidException;
+use Modulith\ArchCheck\Exceptions\PhpVersionNotValidException;
 
 class TargetPhpVersion
 {

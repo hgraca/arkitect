@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\CLI;
+namespace Modulith\ArchCheck\CLI;
 
-use Arkitect\ClassSet;
-use Arkitect\ClassSetRules;
-use Arkitect\Rules\DSL\ArchRule;
+use Modulith\ArchCheck\ClassSet;
+use Modulith\ArchCheck\ClassSetRules;
+use Modulith\ArchCheck\Rules\DSL\ArchRule;
 
 class Config
 {

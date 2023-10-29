@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Arkitect\Analyzer;
+namespace Modulith\ArchCheck\Analyzer;
 
-use Arkitect\CLI\TargetPhpVersion;
-use Arkitect\Rules\ParsingError;
+use Modulith\ArchCheck\CLI\TargetPhpVersion;
+use Modulith\ArchCheck\Rules\ParsingError;
 use PhpParser\ErrorHandler\Collecting;
 use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;

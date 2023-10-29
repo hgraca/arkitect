@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arkitect\Tests\Unit;
+namespace Modulith\ArchCheck\Test\Unit;
 
-use Arkitect\ClassSet;
+use Modulith\ArchCheck\ClassSet;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
