@@ -3,21 +3,17 @@
 [![Packagist](https://img.shields.io/packagist/dt/phparkitect/phparkitect.svg)](https://packagist.org/packages/phparkitect/phparkitect)
 [![codecov](https://codecov.io/gh/phparkitect/arkitect/branch/main/graph/badge.svg)](https://codecov.io/gh/phparkitect/arkitect)
 
-# NOTE
+# CREDITS
 
 
-> This project is a clone of [phparkitect/arkitect](https://github.com/phparkitect/arkitect), with some extra features
-on top of it.
+> This project is a clone of [phparkitect/arkitect](https://github.com/phparkitect/arkitect).
 > 
-> As much as possible, this project will comply to upstream, this is just a way to get the features
-I need, quickly incorporated.
+> We decided to make a fork because our PRs were becoming stale, 
+which means that either the original project is not maintained or they 
+do not wish to go in the direction we need the project to go.
 >
-> I will periodically rebase on the original project (upstream), and also periodically open PRs onto upstream,
-to incorporate the features I build.
->
-> This means the **history on master will change**. The tags will be stable, though.
->
-> This project uses semantic versioning, but completely independent of the upstream versioning.
+> In any case, the initial work is commendable and very appreciated.
+
 
 # Index
 
