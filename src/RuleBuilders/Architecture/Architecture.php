@@ -113,19 +113,25 @@ class Architecture implements
     {
         foreach ($this->componentSelectors as $name => $selector) {
             if (isset($this->allowedDependencies[$name])) {
+                $allowedDependenciesWithoutSelf = array_filter(
+                    $this->allowedDependencies[$name],
+                    function($value) use ($name){
+                        return $value !== $name;
+                    }
+                );
                 yield Rule::allClasses()
                     ->that(\is_string($selector) ? new ResideInOneOfTheseNamespaces($selector) : $selector)
                     ->should($this->createAllowedExpression(
                         array_merge([$name], $this->allowedDependencies[$name])
                     ))
                     ->because(
-                        $because
-                            ?? "$name can only depend on itself"
-                                .(
-                                    \count($this->allowedDependencies[$name])
-                                    ? ' and on '.implode(', ', $this->allowedDependencies[$name])
-                                    : ''
-                                )
+                        "$name can only depend on itself"
+                        . (
+                            \count($allowedDependenciesWithoutSelf)
+                            ? ' and on '.implode(', ', $allowedDependenciesWithoutSelf)
+                            : ''
+                        )
+                        . ($because ? "\nbecause ". $because : '')
                     );
             }
 
@@ -134,9 +140,9 @@ class Architecture implements
                     ->that(\is_string($selector) ? new ResideInOneOfTheseNamespaces($selector) : $selector)
                     ->should($this->createAllowedExpression($this->componentDependsOnlyOnTheseComponents[$name]))
                     ->because(
-                        $because
-                            ?? "$name can only depend on "
-                                .implode(', ', $this->componentDependsOnlyOnTheseComponents[$name])
+                        "$name can only depend on "
+                        .implode(', ', $this->componentDependsOnlyOnTheseComponents[$name])
+                        . ($because ? "\nbecause ". $because : '')
                     );
             }
 
@@ -145,8 +151,8 @@ class Architecture implements
                     ->that(\is_string($selector) ? new ResideInOneOfTheseNamespaces($selector) : $selector)
                     ->should($this->createForbiddenExpression($this->forbiddenDependencies[$name]))
                     ->because(
-                        $because
-                            ?? "$name must not depend on ".implode(', ', $this->forbiddenDependencies[$name])
+                        "$name must not depend on ".implode(', ', $this->forbiddenDependencies[$name])
+                        . ($because ? "\nbecause ". $because : '')
                     );
             }
         }
