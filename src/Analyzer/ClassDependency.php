@@ -56,6 +56,9 @@ class ClassDependency
         $reflector = new \ReflectionClass($dependencyFqcn);
         $filename = $reflector->getFileName();
         if (false === $filename) {
+            if (class_exists($dependencyFqcn)) {
+                return $this->createDescriptionOfNativeClass($reflector);
+            }
             throw new ClassFileNotFoundException($dependencyFqcn);
         }
 
@@ -64,5 +67,25 @@ class ClassDependency
         $classDescriptionList = $fileParser->getClassDescriptions();
 
         return array_pop($classDescriptionList);
+    }
+
+    private function createDescriptionOfNativeClass(\ReflectionClass $reflector): ClassDescription
+    {
+        $interfaces = [];
+        foreach ($reflector->getInterfaces() as $interface) {
+            $interfaces[] = FullyQualifiedClassName::fromString($interface->getName());
+        }
+
+        return new ClassDescription(
+            FullyQualifiedClassName::fromString($reflector->getName()),
+            [], // we can't know this without a file, but we also don't care as these are built in classes
+            $interfaces,
+            null,
+            $reflector->isFinal(),
+            $reflector->isAbstract(),
+            $reflector->isInterface(),
+            $reflector->isTrait(),
+            $reflector->isEnum(),
+        );
     }
 }
