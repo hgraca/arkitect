@@ -42,7 +42,7 @@ final readonly class LayerDependenciesGoInwardsAndDownwards implements RuleSetBu
             ->where('Domain')->mayDependOnComponents('PhpOverlay', 'ConformistDependencies', 'SharedKernel')
             ->where('Application')->mayDependOnComponents('Domain', 'Port', 'SharedKernel', 'PhpOverlay', 'ConformistDependencies')
             ->where('Port')->mayDependOnComponents('PhpOverlay', 'ConformistDependencies', 'SharedKernel')
-            ->where('Adapter')->mayDependOnComponents('Port', 'Vendor', 'PhpOverlay', 'ConformistDependencies', 'SharedKernel')
+            ->where('Adapter')->mayDependOnComponents('Domain', 'Application', 'Port', 'Vendor', 'PhpOverlay', 'ConformistDependencies', 'SharedKernel')
             ->where('Ui')->mayDependOnComponents('Domain', 'Application', 'Port', 'PhpOverlay', 'ConformistDependencies')
             ->where('CodeConfig')->shouldOnlyDependOnComponents('Application', 'Domain', 'Adapter', 'Port', 'Vendor', 'PhpOverlay', 'ConformistDependencies')
             ->where('Tests')->mayDependOnAnyComponent()
