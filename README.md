@@ -40,7 +40,7 @@ This project uses semantic versioning, but completely independent of the upstrea
 ## Using Composer
 
 ```bash
-composer require --dev phparkitect/phparkitect
+composer require --dev hgraca/phparkitect
 ```
 
 ## Using a Phar
@@ -49,7 +49,7 @@ Sometimes your project can conflict with one or more of PHPArkitect's dependenci
 The Phar can be downloaded from GitHub:
 
 ```
-wget https://github.com/phparkitect/arkitect/releases/latest/download/phparkitect.phar
+wget https://github.com/hgraca/arkitect/releases/latest/download/phparkitect.phar
 chmod +x phparkitect.phar
 ./phparkitect.phar check
 ```
