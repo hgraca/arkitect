@@ -13,6 +13,7 @@ final readonly class LayerDependenciesGoInwardsAndDownwards implements RuleSetBu
     public function __construct(
         private Expression $domain,
         private Expression $application,
+        private Expression $useCase,
         private Expression $sharedKernel,
         private Expression $port,
         private Expression $adapter,
@@ -29,6 +30,7 @@ final readonly class LayerDependenciesGoInwardsAndDownwards implements RuleSetBu
         $rules = Architecture::withComponents()
             ->component('Domain')->definedByExpression($this->domain)
             ->component('Application')->definedByExpression($this->application)
+            ->component('UseCase')->definedByExpression($this->useCase)
             ->component('SharedKernel')->definedByExpression($this->sharedKernel)
             ->component('Port')->definedByExpression($this->port)
             ->component('Adapter')->definedByExpression($this->adapter)
@@ -40,9 +42,10 @@ final readonly class LayerDependenciesGoInwardsAndDownwards implements RuleSetBu
             ->component('Tests')->definedByExpression($this->tests)
             ->where('PhpOverlay')->mayDependOnComponents('ConformistDependencies')
             ->where('Domain')->mayDependOnComponents('PhpOverlay', 'ConformistDependencies', 'SharedKernel')
-            ->where('Application')->mayDependOnComponents('Domain', 'Port', 'SharedKernel', 'PhpOverlay', 'ConformistDependencies')
+            ->where('UseCase')->mayDependOnComponents('Domain', 'Application', 'Port', 'SharedKernel', 'PhpOverlay', 'ConformistDependencies')
+            ->where('Application')->mayDependOnComponents('Domain', 'UseCase', 'Port', 'SharedKernel', 'PhpOverlay', 'ConformistDependencies')
             ->where('Port')->mayDependOnComponents('PhpOverlay', 'ConformistDependencies', 'SharedKernel')
-            ->where('Adapter')->mayDependOnComponents('Domain', 'Application', 'Port', 'Vendor', 'PhpOverlay', 'ConformistDependencies', 'SharedKernel')
+            ->where('Adapter')->mayDependOnComponents('UseCase', 'Port', 'Vendor', 'PhpOverlay', 'ConformistDependencies', 'SharedKernel')
             ->where('Ui')->mayDependOnComponents('Domain', 'Application', 'Port', 'PhpOverlay', 'ConformistDependencies')
             ->where('CodeConfig')->shouldOnlyDependOnComponents('Application', 'Domain', 'Adapter', 'Port', 'Vendor', 'PhpOverlay', 'ConformistDependencies')
             ->where('Tests')->mayDependOnAnyComponent()
