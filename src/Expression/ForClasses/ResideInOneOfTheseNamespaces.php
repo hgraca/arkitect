@@ -33,7 +33,7 @@ class ResideInOneOfTheseNamespaces implements Expression, MergeableExpression
     {
         $resideInNamespace = false;
         foreach ($this->namespaces as $namespace) {
-            if ($theClass->namespaceMatches($namespace.'*')) {
+            if ($theClass->namespaceMatches(rtrim($namespace, '*').'*')) {
                 $resideInNamespace = true;
             }
         }
