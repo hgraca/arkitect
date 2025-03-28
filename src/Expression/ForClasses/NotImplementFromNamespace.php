@@ -27,7 +27,7 @@ class NotImplementFromNamespace implements Expression
 
     public function describe(ClassDescription $theClass, string $because = ''): Description
     {
-        return new Description("should not implement from namespace {$this->namespace}", $because);
+        return new Description("should not implement from namespace {$this->namespace}, except for [" . implode(', ', $this->exclusionList) . ']', $because);
     }
 
     public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void
@@ -57,7 +57,10 @@ class NotImplementFromNamespace implements Expression
     private function isExcluded(string $implementedInterface): bool
     {
         foreach ($this->exclusionList as $excludedNamespace) {
-            if (str_starts_with($implementedInterface, $excludedNamespace)) {
+            if (
+                $implementedInterface === $excludedNamespace
+                || str_starts_with($implementedInterface, rtrim($excludedNamespace, '\\') . '\\')
+            ) {
                 return true;
             }
         }
