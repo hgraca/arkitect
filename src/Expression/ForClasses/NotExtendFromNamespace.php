@@ -60,7 +60,10 @@ class NotExtendFromNamespace implements Expression
     private function extendsAnExceptionNamespace(string $extends): bool
     {
         foreach ($this->exceptions as $exceptionNamespace) {
-            if (str_starts_with($extends, $exceptionNamespace)) {
+            if (
+                $extends === $exceptionNamespace
+                || str_starts_with($extends, $exceptionNamespace)
+            ) {
                 return true;
             }
         }
