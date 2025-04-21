@@ -7,7 +7,7 @@ interface Parser
 {
     public function parse(string $fileContent, string $filename): void;
 
-    public function getClassDescriptions(): array;
+    public function getClassDescriptions(): ClassDescriptionCollection;
 
     public function getParsingErrors(): array;
 }

@@ -37,10 +37,7 @@ class FileParser implements Parser
         $this->traverser->addVisitor($this->fileVisitor);
     }
 
-    /**
-     * @return array<ClassDescription>
-     */
-    public function getClassDescriptions(): array
+    public function getClassDescriptions(): ClassDescriptionCollection
     {
         return $this->fileVisitor->getClassDescriptions();
     }

@@ -61,6 +61,9 @@ class ClassDescriptionBuilder
         return $this;
     }
 
+    /**
+     * @param class-string $FQCN
+     */
     public function setClassName(string $FQCN): self
     {
         $this->FQCN = FullyQualifiedClassName::fromString($FQCN);
@@ -68,6 +71,9 @@ class ClassDescriptionBuilder
         return $this;
     }
 
+    /**
+     * @param class-string $FQCN
+     */
     public function addInterface(string $FQCN, int $line): self
     {
         $this->addDependency(new ClassDependency($FQCN, $line));
@@ -83,6 +89,9 @@ class ClassDescriptionBuilder
         return $this;
     }
 
+    /**
+     * @param class-string $FQCN
+     */
     public function addExtends(string $FQCN, int $line): self
     {
         $this->addDependency(new ClassDependency($FQCN, $line));
@@ -140,6 +149,9 @@ class ClassDescriptionBuilder
         return $this;
     }
 
+    /**
+     * @param class-string $FQCN
+     */
     public function addAttribute(string $FQCN, int $line): self
     {
         $this->addDependency(new ClassDependency($FQCN, $line));

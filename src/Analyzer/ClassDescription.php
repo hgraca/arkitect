@@ -77,6 +77,9 @@ class ClassDescription
         $this->enum = $enum;
     }
 
+    /**
+     * @param class-string $FQCN
+     */
     public static function getBuilder(string $FQCN, string $filePath): ClassDescriptionBuilder
     {
         $cb = new ClassDescriptionBuilder();
@@ -91,6 +94,9 @@ class ClassDescription
         return $this->FQCN->className();
     }
 
+    /**
+     * @return class-string
+     */
     public function getFQCN(): string
     {
         return $this->FQCN->toString();

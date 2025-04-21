@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Arkitect\CLI;
 
-use Arkitect\Analyzer\ClassDescription;
-use Arkitect\Analyzer\FileParser;
+use Arkitect\Analyzer\ClassDescriptionCollection;
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Analyzer\FileParserFactory;
 use Arkitect\Analyzer\Parser;
 use Arkitect\ClassSetRules;
@@ -23,17 +23,23 @@ class Runner
 
     private bool $stopOnFailure;
 
+    private ClassDescriptionRegistry $classDescriptionRegistry;
+
     public function __construct(bool $stopOnFailure = false)
     {
         $this->stopOnFailure = $stopOnFailure;
         $this->violations = new Violations();
         $this->parsingErrors = new ParsingErrors();
+        $this->classDescriptionRegistry = ClassDescriptionRegistry::new();
     }
 
+    /**
+     * @throws FailOnFirstViolationException
+     */
     public function run(Config $config, Progress $progress, TargetPhpVersion $targetPhpVersion, bool $onlyErrors): void
     {
-        /** @var FileParser $fileParser */
         $fileParser = FileParserFactory::createFileParser($targetPhpVersion, $config->isParseCustomAnnotationsEnabled());
+        $this->classDescriptionRegistry = ClassDescriptionRegistry::new();
 
         /** @var ClassSetRules $classSetRule */
         foreach ($config->getClassSetRules() as $classSetRule) {
@@ -49,6 +55,9 @@ class Runner
         }
     }
 
+    /**
+     * @throws FailOnFirstViolationException
+     */
     public function check(
         ClassSetRules $classSetRule,
         Progress $progress,
@@ -57,40 +66,9 @@ class Runner
         ParsingErrors $parsingErrors,
         bool $onlyErrors = false
     ): void {
-        /** @var SplFileInfo $file */
-        foreach ($classSetRule->getClassSet() as $file) {
-            $fileViolations = new Violations();
+        $classDescriptions = $this->parseClassSet($classSetRule, $progress, $fileParser, $parsingErrors, $onlyErrors);
 
-            if (!$onlyErrors) {
-                $progress->startParsingFile($file->getRelativePathname());
-            }
-
-            $fileParser->parse($file->getContents(), $file->getRelativePathname());
-            $parsedErrors = $fileParser->getParsingErrors();
-
-            foreach ($parsedErrors as $parsedError) {
-                $parsingErrors->add($parsedError);
-            }
-
-            /** @var ClassDescription $classDescription */
-            foreach ($fileParser->getClassDescriptions() as $classDescription) {
-                foreach ($classSetRule->getRules() as $rule) {
-                    $rule->check($classDescription, $fileViolations);
-
-                    if ($this->stopOnFailure && $fileViolations->count() > 0) {
-                        $violations->merge($fileViolations);
-
-                        throw new FailOnFirstViolationException();
-                    }
-                }
-            }
-
-            $violations->merge($fileViolations);
-
-            if (!$onlyErrors) {
-                $progress->endParsingFile($file->getRelativePathname());
-            }
-        }
+        $this->analyseClassSet($classSetRule, $classDescriptions, $violations, $progress, $onlyErrors);
     }
 
     public function getViolations(): Violations
@@ -101,5 +79,85 @@ class Runner
     public function getParsingErrors(): ParsingErrors
     {
         return $this->parsingErrors;
+    }
+
+    public function parseFile(
+        Parser $fileParser,
+        SplFileInfo $file,
+        ParsingErrors $parsingErrors
+    ): ClassDescriptionCollection {
+        $fileParser->parse($file->getContents(), $file->getRelativePathname());
+        $parsedErrors = $fileParser->getParsingErrors();
+
+        foreach ($parsedErrors as $parsedError) {
+            $parsingErrors->add($parsedError);
+        }
+
+        return $fileParser->getClassDescriptions();
+    }
+
+    private function parseClassSet(
+        ClassSetRules $classSetRule,
+        Progress $progress,
+        Parser $fileParser,
+        ParsingErrors $parsingErrors,
+        bool $onlyErrors = false
+    ): ClassDescriptionCollection {
+        $classDescriptionCollection = new ClassDescriptionCollection();
+
+        /** @var SplFileInfo $file */
+        foreach ($classSetRule->getClassSet() as $file) {
+            if (!$onlyErrors) {
+                $progress->startParsingFile($file->getRelativePathname());
+            }
+
+            $classesParsedFromFile = new ClassDescriptionCollection();
+            $initialParsingErrors = $parsingErrors->count();
+            if (!$this->classDescriptionRegistry->hasFile($file->getRelativePathname())) {
+                $classesParsedFromFile = $this->parseFile($fileParser, $file, $parsingErrors);
+            }
+            $finalParsingErrors = $parsingErrors->count();
+
+            if ($initialParsingErrors === $finalParsingErrors && !$classesParsedFromFile->isEmpty()) {
+                $this->classDescriptionRegistry->addCollection($classesParsedFromFile);
+                $classDescriptionCollection->addCollection($classesParsedFromFile);
+            }
+
+            if (!$onlyErrors) {
+                $progress->endParsingFile($file->getRelativePathname());
+            }
+        }
+
+        return $classDescriptionCollection;
+    }
+
+    private function analyseClassSet(
+        ClassSetRules $classSetRule,
+        ClassDescriptionCollection $classDescriptionsCollection,
+        Violations $violations,
+        Progress $progress,
+        bool $onlyErrors
+    ): void {
+        foreach ($classDescriptionsCollection as $classDescription) {
+            $fileViolations = new Violations();
+            if (!$onlyErrors) {
+                $progress->startParsingFile($classDescription->getFilePath());
+            }
+            foreach ($classSetRule->getRules() as $rule) {
+                $rule->check($classDescription, $fileViolations);
+
+                if ($this->stopOnFailure && $fileViolations->count() > 0) {
+                    $violations->merge($fileViolations);
+
+                    throw new FailOnFirstViolationException();
+                }
+            }
+
+            $violations->merge($fileViolations);
+
+            if (!$onlyErrors) {
+                $progress->endParsingFile($classDescription->getFilePath());
+            }
+        }
     }
 }

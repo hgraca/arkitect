@@ -5,8 +5,14 @@ namespace Arkitect\Analyzer;
 
 class PatternString
 {
+    /**
+     * @var class-string
+     */
     private string $value;
 
+    /**
+     * @param class-string $value
+     */
     public function __construct(string $value)
     {
         $this->value = $value;
@@ -29,6 +35,9 @@ class PatternString
         return fnmatch($pattern, $this->value, \FNM_NOESCAPE);
     }
 
+    /**
+     * @return class-string
+     */
     public function toString(): string
     {
         return $this->value;

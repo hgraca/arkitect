@@ -20,6 +20,9 @@ class FullyQualifiedClassName
         $this->class = $class;
     }
 
+    /**
+     * @return class-string
+     */
     public function toString(): string
     {
         return $this->fqcnString->toString();
@@ -53,6 +56,9 @@ class FullyQualifiedClassName
         return $this->namespace->toString();
     }
 
+    /**
+     * @param class-string $fqcn
+     */
     public static function fromString(string $fqcn): self
     {
         $validFqcn = '/^[a-zA-Z0-9_\x7f-\xff\\\\]*[a-zA-Z0-9_\x7f-\xff]$/';
@@ -63,7 +69,9 @@ class FullyQualifiedClassName
 
         $pieces = explode('\\', $fqcn);
         $piecesWithoutEmpty = array_filter($pieces);
+        /** @var class-string $className */
         $className = array_pop($piecesWithoutEmpty);
+        /** @var class-string $namespace */
         $namespace = implode('\\', $piecesWithoutEmpty);
 
         return new self(new PatternString($fqcn), new PatternString($namespace), new PatternString($className));

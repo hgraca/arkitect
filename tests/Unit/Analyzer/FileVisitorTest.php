@@ -30,7 +30,7 @@ class FileVisitorTest extends TestCase
         $fp = FileParserFactory::createFileParser(TargetPhpVersion::create('7.4'));
         $fp->parse($code, 'path/to/class.php');
 
-        self::assertEmpty($fp->getClassDescriptions());
+        self::assertTrue($fp->getClassDescriptions()->isEmpty());
     }
 
     public function test_violation_should_have_ref_to_filepath(): void
@@ -58,7 +58,7 @@ class FileVisitorTest extends TestCase
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Foo');
-        $dependsOnTheseNamespaces->evaluate($fp->getClassDescriptions()[0], $violations, 'because');
+        $dependsOnTheseNamespaces->evaluate($fp->getClassDescriptions()->getByClass(FullyQualifiedClassName::fromString('Foo\Bar\MyClass')), $violations, 'because');
 
         self::assertCount(2, $violations);
         self::assertEquals('path/to/class.php', $violations->get(0)->getFilePath());
@@ -90,8 +90,8 @@ class FileVisitorTest extends TestCase
         $cd = $fp->getClassDescriptions();
 
         self::assertCount(2, $cd);
-        self::assertInstanceOf(ClassDescription::class, $cd[0]);
-        self::assertInstanceOf(ClassDescription::class, $cd[1]);
+        self::assertInstanceOf(ClassDescription::class, $cd->getByClass(FullyQualifiedClassName::fromString('Root\Namespace1\Dog')));
+        self::assertInstanceOf(ClassDescription::class, $cd->getByClass(FullyQualifiedClassName::fromString('Root\Namespace1\Cat')));
     }
 
     public function test_should_create_a_class_description_and_parse_anonymous_class(): void
@@ -135,8 +135,8 @@ class FileVisitorTest extends TestCase
         $cd = $fp->getClassDescriptions();
 
         self::assertCount(2, $cd);
-        self::assertInstanceOf(ClassDescription::class, $cd[0]);
-        self::assertInstanceOf(ClassDescription::class, $cd[1]);
+        self::assertInstanceOf(ClassDescription::class, $cd->getByClass(FullyQualifiedClassName::fromString('Root\Namespace1\Dog')));
+        self::assertInstanceOf(ClassDescription::class, $cd->getByClass(FullyQualifiedClassName::fromString('Root\Namespace1\Cat')));
 
         $expectedInterfaces = [
             new ClassDependency('Root\Namespace1\AnInterface', 7),
@@ -145,7 +145,7 @@ class FileVisitorTest extends TestCase
             new ClassDependency('Root\Namespace1\Proj', 23),
         ];
 
-        self::assertEquals($expectedInterfaces, $cd[0]->getDependencies());
+        self::assertEquals($expectedInterfaces, $cd->getByClass(FullyQualifiedClassName::fromString('Root\Namespace1\Dog'))->getDependencies());
     }
 
     public function test_it_should_parse_extends_class(): void
@@ -169,7 +169,7 @@ class FileVisitorTest extends TestCase
         $fp = FileParserFactory::createFileParser(TargetPhpVersion::create('7.4'));
         $fp->parse($code, 'relativePathName');
 
-        $cd = $fp->getClassDescriptions()[1];
+        $cd = $fp->getClassDescriptions()->getByClass(FullyQualifiedClassName::fromString('Root\Animals\Cat'));
 
         self::assertEquals('Root\Animals\Animal', $cd->getExtends()[0]->toString());
     }
@@ -198,7 +198,7 @@ class FileVisitorTest extends TestCase
         $fp = FileParserFactory::createFileParser(TargetPhpVersion::create('7.4'));
         $fp->parse($code, 'relativePathName');
 
-        $cd = $fp->getClassDescriptions()[1];
+        $cd = $fp->getClassDescriptions()->getByClass(FullyQualifiedClassName::fromString('Root\Animals\Cat'));
 
         self::assertEquals('Root\Animals\Animal', $cd->getExtends()[0]->toString());
     }
@@ -230,7 +230,7 @@ class FileVisitorTest extends TestCase
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Foo', 'Symfony', 'Doctrine');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Foo\Bar\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -270,7 +270,7 @@ class FileVisitorTest extends TestCase
             new ClassDependency('Foo\Baz\StaticClass', 15),
         ];
 
-        self::assertEquals($expectedDependencies, $cd[0]->getDependencies());
+        self::assertEquals($expectedDependencies, $cd->getByClass(FullyQualifiedClassName::fromString('Foo\Bar\MyClass'))->getDependencies());
     }
 
     public function test_it_should_parse_arrow_function(): void
@@ -299,7 +299,7 @@ class FileVisitorTest extends TestCase
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Foo', 'Symfony', 'Doctrine');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Root\Animals\Animal')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -392,7 +392,7 @@ class FileVisitorTest extends TestCase
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new NotHaveDependencyOutsideNamespace('Root\Animals');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Root\Animals\Tiger')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -425,7 +425,7 @@ class FileVisitorTest extends TestCase
         $violations = new Violations();
 
         $dependsOnlyOnTheseNamespaces = new DependsOnlyOnTheseNamespaces();
-        $dependsOnlyOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnlyOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyNamespace\MyClasses\Foo')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -451,7 +451,7 @@ EOF;
                 FullyQualifiedClassName::fromString('Bar\\FooAttr'),
                 FullyQualifiedClassName::fromString('Baz'),
             ],
-            $cd[0]->getAttributes()
+            $cd->getByClass(FullyQualifiedClassName::fromString('Foo'))->getAttributes()
         );
     }
 
@@ -489,7 +489,7 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new NotHaveDependencyOutsideNamespace('Root\Cars');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Root\Cars\KiaSportage')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -517,7 +517,7 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new Implement('MyInterface');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Root\Cars\Enum')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -549,7 +549,7 @@ EOF;
                 FullyQualifiedClassName::fromString('Bar\\FooAttr'),
                 FullyQualifiedClassName::fromString('Root\\Cars\\Baz'),
             ],
-            $cd[0]->getAttributes()
+            $cd->getByClass(FullyQualifiedClassName::fromString('Root\Cars\Enum'))->getAttributes()
         );
     }
 
@@ -580,7 +580,7 @@ EOF;
                 FullyQualifiedClassName::fromString('Bar\\FooAttr'),
                 FullyQualifiedClassName::fromString('Root\\Cars\\Baz'),
             ],
-            $cd[0]->getAttributes()
+            $cd->getByClass(FullyQualifiedClassName::fromString('Root\Cars\AnInterface'))->getAttributes()
         );
     }
 
@@ -611,7 +611,7 @@ EOF;
                 FullyQualifiedClassName::fromString('Bar\\FooAttr'),
                 FullyQualifiedClassName::fromString('Root\\Cars\\Baz'),
             ],
-            $cd[0]->getAttributes()
+            $cd->getByClass(FullyQualifiedClassName::fromString('Root\Cars\ATrait'))->getAttributes()
         );
     }
 
@@ -645,12 +645,12 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new NotContainDocBlockLike('ItemNotFound');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Root\Cars\Bar')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
 
         $notHaveDependencyOutsideNamespace = new NotContainDocBlockLike('Exception');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Root\Cars\Bar')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(2, $violations);
     }
@@ -678,7 +678,11 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate(
+            $cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')),
+            $violations,
+            'we want to add this rule for our software'
+        );
 
         self::assertCount(1, $violations);
     }
@@ -706,7 +710,11 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate(
+            $cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')),
+            $violations,
+            'we want to add this rule for our software'
+        );
 
         self::assertCount(1, $violations);
     }
@@ -734,7 +742,7 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new NotHaveDependencyOutsideNamespace('MyProject\AppBundle\Application');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -766,7 +774,7 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new NotHaveDependencyOutsideNamespace('MyProject\AppBundle\Application');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -800,7 +808,7 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -830,7 +838,7 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependencyOutsideNamespace = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $notHaveDependencyOutsideNamespace->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependencyOutsideNamespace->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -858,7 +866,7 @@ EOF;
         $fp = FileParserFactory::createFileParser(TargetPhpVersion::create('8.1'));
         $fp->parse($code, 'relativePathName');
 
-        $cd = $fp->getClassDescriptions()[2]; // class Test
+        $cd = $fp->getClassDescriptions()->getByClass(FullyQualifiedClassName::fromString('Foo\Test')); // class Test
 
         $violations = new Violations();
 
@@ -893,7 +901,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -919,7 +927,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\BookRepositoryInterface')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -954,8 +962,8 @@ EOF;
         $cd = $fp->getClassDescriptions();
 
         self::assertCount(3, $cd);
-        self::assertEquals('MyProject\AppBundle\Application\FooAble', $cd[2]->getExtends()[0]->toString());
-        self::assertEquals('MyProject\AppBundle\Application\BarAble', $cd[2]->getExtends()[1]->toString());
+        self::assertEquals('MyProject\AppBundle\Application\FooAble', $cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ForBarAble'))->getExtends()[0]->toString());
+        self::assertEquals('MyProject\AppBundle\Application\BarAble', $cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ForBarAble'))->getExtends()[1]->toString());
     }
 
     public function test_it_handles_return_types(): void
@@ -990,7 +998,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Foo', 'Symfony', 'Doctrine');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Foo\Bar\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -1019,7 +1027,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnlyOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $dependsOnlyOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnlyOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\ApplicationLevelDto')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -1048,7 +1056,7 @@ EOF;
         $violations = new Violations();
 
         $notHaveDependenciesOutside = new NotHaveDependencyOutsideNamespace('App\Domain');
-        $notHaveDependenciesOutside->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $notHaveDependenciesOutside->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('App\Domain\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(0, $violations);
     }
@@ -1078,7 +1086,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1108,7 +1116,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1138,7 +1146,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1170,7 +1178,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1202,7 +1210,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1234,7 +1242,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1269,7 +1277,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1302,7 +1310,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1335,7 +1343,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1368,7 +1376,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('Domain');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('Domain\Foo\MyClass')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1397,7 +1405,7 @@ EOF;
         $violations = new Violations();
 
         $dependsOnTheseNamespaces = new DependsOnlyOnTheseNamespaces('MyProject\AppBundle\Application');
-        $dependsOnTheseNamespaces->evaluate($cd[0], $violations, 'we want to add this rule for our software');
+        $dependsOnTheseNamespaces->evaluate($cd->getByClass(FullyQualifiedClassName::fromString('MyProject\AppBundle\Application\BookRepositoryInterface')), $violations, 'we want to add this rule for our software');
 
         self::assertCount(1, $violations);
     }
@@ -1505,6 +1513,6 @@ EOF;
 
         $cd = $fp->getClassDescriptions();
 
-        self::assertInstanceOf(ClassDescription::class, $cd[0]);
+        self::assertInstanceOf(ClassDescription::class, $cd->getByClass(FullyQualifiedClassName::fromString('App\Foo\User')));
     }
 }

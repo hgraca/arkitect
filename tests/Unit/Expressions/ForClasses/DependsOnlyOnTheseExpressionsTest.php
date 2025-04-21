@@ -57,6 +57,6 @@ class DependsOnlyOnTheseExpressionsTest extends TestCase
         $fileParser->parse($classCode, $fileName);
         $classDescriptionList = $fileParser->getClassDescriptions();
 
-        return array_pop($classDescriptionList);
+        return $classDescriptionList->reset();
     }
 }

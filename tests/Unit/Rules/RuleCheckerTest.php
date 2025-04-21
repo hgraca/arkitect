@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Arkitect\Tests\Unit\Rules;
 
 use Arkitect\Analyzer\ClassDescription;
+use Arkitect\Analyzer\ClassDescriptionCollection;
 use Arkitect\Analyzer\FileParserFactory;
 use Arkitect\Analyzer\Parser;
 use Arkitect\ClassSet;
@@ -127,9 +128,9 @@ class FakeClassSet extends ClassSet
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator([
-            new FakeSplFileInfo('uno', '.', 'dir'),
-            new FakeSplFileInfo('due', '.', 'dir'),
-            new FakeSplFileInfo('tre', '.', 'dir'),
+            new FakeSplFileInfo('uno', '.', 'src/Uno.php'),
+            new FakeSplFileInfo('due', '.', 'src/Due.php'),
+            new FakeSplFileInfo('tre', '.', 'src/Tre.php'),
         ]);
     }
 }
@@ -162,13 +163,18 @@ class FakeRule implements ArchRule
 
 class FakeParser implements Parser
 {
+    private string $filename;
+
     public function parse(string $fileContent, string $filename): void
     {
+        $this->filename = $filename;
     }
 
-    public function getClassDescriptions(): array
+    public function getClassDescriptions(): ClassDescriptionCollection
     {
-        return [ClassDescription::getBuilder('uno', 'src/Foo.php')->build()];
+        $fqcn = explode('.', explode('/', $this->filename)[1])[0];
+
+        return new ClassDescriptionCollection(ClassDescription::getBuilder($fqcn, $this->filename)->build());
     }
 
     public function getParsingErrors(): array

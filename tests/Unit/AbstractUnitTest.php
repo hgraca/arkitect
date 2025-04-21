@@ -29,6 +29,6 @@ abstract class AbstractUnitTest extends TestCase
         $fileParser->parse(file_get_contents($filename), $filename);
         $classDescriptionList = $fileParser->getClassDescriptions();
 
-        return array_pop($classDescriptionList);
+        return $classDescriptionList->reset();
     }
 }

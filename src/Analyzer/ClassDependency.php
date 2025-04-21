@@ -11,6 +11,9 @@ class ClassDependency
 
     private FullyQualifiedClassName $FQCN;
 
+    /**
+     * @param class-string $FQCN
+     */
     public function __construct(string $FQCN, int $line)
     {
         $this->line = $line;
@@ -64,7 +67,7 @@ class ClassDependency
         $fileParser->parse(file_get_contents($filename), $filename);
         $classDescriptionList = $fileParser->getClassDescriptions();
 
-        return array_pop($classDescriptionList);
+        return $classDescriptionList->reset();
     }
 
     private function createDescriptionOfNativeClass(\ReflectionClass $reflector): ClassDescription

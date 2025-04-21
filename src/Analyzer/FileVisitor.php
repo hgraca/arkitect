@@ -13,11 +13,11 @@ class FileVisitor extends NodeVisitorAbstract
 {
     private ClassDescriptionBuilder $classDescriptionBuilder;
 
-    /** @var array<ClassDescription> */
-    private array $classDescriptions = [];
+    private ClassDescriptionCollection $classDescriptions;
 
     public function __construct(ClassDescriptionBuilder $classDescriptionBuilder)
     {
+        $this->classDescriptions = new ClassDescriptionCollection();
         $this->classDescriptionBuilder = $classDescriptionBuilder;
     }
 
@@ -30,18 +30,29 @@ class FileVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Node\Stmt\Class_) {
             if (!$node->isAnonymous() && null !== $node->namespacedName) {
+                /**
+                 * @psalm-suppress ArgumentTypeCoercion
+                 */
                 $this->classDescriptionBuilder->setClassName($node->namespacedName->toCodeString());
             }
 
             foreach ($node->implements as $interface) {
+                /**
+                 * @psalm-suppress ArgumentTypeCoercion
+                 */
                 $this->classDescriptionBuilder
                     ->addInterface($interface->toString(), $interface->getLine());
             }
 
             if (!$node->isAnonymous() && null !== $node->extends) {
+                /**
+                 * @psalm-suppress ArgumentTypeCoercion
+                 */
                 $this->classDescriptionBuilder
-                    ->addExtends($node->extends->toString(), $node->getLine());
+                    ->addExtends($node->extends->toString(), $node->getLine()); // @psalm-suppress ArgumentTypeCoercion
             }
+
+            // TODO add traits usages
 
             if ($node->isFinal()) {
                 $this->classDescriptionBuilder->setFinal(true);
@@ -57,10 +68,16 @@ class FileVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Stmt\Enum_ && null !== $node->namespacedName) {
+            /**
+             * @psalm-suppress ArgumentTypeCoercion
+             */
             $this->classDescriptionBuilder->setClassName($node->namespacedName->toCodeString());
             $this->classDescriptionBuilder->setEnum(true);
 
             foreach ($node->implements as $interface) {
+                /**
+                 * @psalm-suppress ArgumentTypeCoercion
+                 */
                 $this->classDescriptionBuilder
                     ->addInterface($interface->toString(), $interface->getLine());
             }
@@ -185,10 +202,16 @@ class FileVisitor extends NodeVisitorAbstract
                 return;
             }
 
+            /**
+             * @psalm-suppress ArgumentTypeCoercion
+             */
             $this->classDescriptionBuilder->setClassName($node->namespacedName->toCodeString());
             $this->classDescriptionBuilder->setInterface(true);
 
             foreach ($node->extends as $interface) {
+                /**
+                 * @psalm-suppress ArgumentTypeCoercion
+                 */
                 $this->classDescriptionBuilder
                     ->addExtends($interface->toString(), $interface->getLine());
             }
@@ -199,6 +222,9 @@ class FileVisitor extends NodeVisitorAbstract
                 return;
             }
 
+            /**
+             * @psalm-suppress ArgumentTypeCoercion
+             */
             $this->classDescriptionBuilder->setClassName($node->namespacedName->toCodeString());
             $this->classDescriptionBuilder->setTrait(true);
         }
@@ -206,6 +232,9 @@ class FileVisitor extends NodeVisitorAbstract
         if ($node instanceof Node\Stmt\ClassMethod) {
             $returnType = $node->returnType;
             if ($returnType instanceof Node\Name\FullyQualified) {
+                /**
+                 * @psalm-suppress ArgumentTypeCoercion
+                 */
                 $this->classDescriptionBuilder
                     ->addDependency(new ClassDependency($returnType->toString(), $returnType->getLine()));
             }
@@ -215,20 +244,23 @@ class FileVisitor extends NodeVisitorAbstract
             $nodeName = $node->name;
 
             if ($nodeName instanceof Node\Name\FullyQualified) {
+                /**
+                 * @psalm-suppress ArgumentTypeCoercion
+                 */
                 $this->classDescriptionBuilder
                     ->addAttribute($node->name->toString(), $node->getLine());
             }
         }
     }
 
-    public function getClassDescriptions(): array
+    public function getClassDescriptions(): ClassDescriptionCollection
     {
         return $this->classDescriptions;
     }
 
     public function clearParsedClassDescriptions(): void
     {
-        $this->classDescriptions = [];
+        $this->classDescriptions = new ClassDescriptionCollection();
         $this->classDescriptionBuilder->setFilePath(null);
         $this->classDescriptionBuilder->clear();
     }
@@ -236,22 +268,22 @@ class FileVisitor extends NodeVisitorAbstract
     public function leaveNode(Node $node): void
     {
         if ($node instanceof Node\Stmt\Class_ && !$node->isAnonymous()) {
-            $this->classDescriptions[] = $this->classDescriptionBuilder->build();
+            $this->classDescriptions->add($this->classDescriptionBuilder->build());
             $this->classDescriptionBuilder->clear();
         }
 
         if ($node instanceof Node\Stmt\Enum_) {
-            $this->classDescriptions[] = $this->classDescriptionBuilder->build();
+            $this->classDescriptions->add($this->classDescriptionBuilder->build());
             $this->classDescriptionBuilder->clear();
         }
 
         if ($node instanceof Node\Stmt\Interface_) {
-            $this->classDescriptions[] = $this->classDescriptionBuilder->build();
+            $this->classDescriptions->add($this->classDescriptionBuilder->build());
             $this->classDescriptionBuilder->clear();
         }
 
         if ($node instanceof Node\Stmt\Trait_) {
-            $this->classDescriptions[] = $this->classDescriptionBuilder->build();
+            $this->classDescriptions->add($this->classDescriptionBuilder->build());
             $this->classDescriptionBuilder->clear();
         }
     }
