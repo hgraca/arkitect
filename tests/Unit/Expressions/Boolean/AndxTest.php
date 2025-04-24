@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arkitect\Tests\Unit\Expressions\Boolean;
 
 use Arkitect\Analyzer\ClassDescriptionBuilder;
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Expression\Boolean\Andx;
 use Arkitect\Expression\ForClasses\Extend;
 use Arkitect\Expression\ForClasses\Implement;
@@ -26,6 +27,7 @@ class AndxTest extends TestCase
         $implementConstraint = new Implement($interface);
         $extendsConstraint = new Extend($class);
         $andConstraint = new Andx($implementConstraint, $extendsConstraint);
+        $andConstraint->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
 
         $because = 'reasons';
         $violations = new Violations();
@@ -45,6 +47,7 @@ class AndxTest extends TestCase
             ->addExtends($class, 10)
             ->build();
         $andConstraint = new Andx();
+        $andConstraint->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
 
         $because = 'reasons';
         $violations = new Violations();
@@ -67,6 +70,7 @@ class AndxTest extends TestCase
         $implementConstraint = new Implement($interface);
         $extendsConstraint = new Extend($class);
         $andConstraint = new Andx($implementConstraint, $extendsConstraint);
+        $andConstraint->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
 
         $because = 'reasons';
         $violationError = $andConstraint->describe($classDescription, $because)->toString();
