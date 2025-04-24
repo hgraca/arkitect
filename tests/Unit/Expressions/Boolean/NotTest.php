@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arkitect\Tests\Unit\Expressions\Boolean;
 
 use Arkitect\Analyzer\ClassDescriptionBuilder;
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Expression\Boolean\Not;
 use Arkitect\Expression\ForClasses\IsInterface;
 use Arkitect\Rules\Violations;
@@ -15,6 +16,7 @@ class NotTest extends TestCase
     public function test_it_should_return_violation_error(): void
     {
         $isNotInterface = new Not(new IsInterface());
+        $isNotInterface->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
         $classDescription = (new ClassDescriptionBuilder())
             ->setFilePath('src/Foo.php')
             ->setClassName('HappyIsland')
@@ -36,6 +38,7 @@ class NotTest extends TestCase
     public function test_it_should_return_true_if_is_not_interface(): void
     {
         $isNotInterface = new Not(new IsInterface());
+        $isNotInterface->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
         $classDescription = (new ClassDescriptionBuilder())
             ->setFilePath('src/Foo.php')
             ->setClassName('HappyIsland')
