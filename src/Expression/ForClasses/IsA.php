@@ -5,16 +5,23 @@ declare(strict_types=1);
 namespace Arkitect\Expression\ForClasses;
 
 use Arkitect\Analyzer\ClassDescription;
+use Arkitect\Analyzer\ClassDescriptionRegistry;
+use Arkitect\Expression\ClassRegistryAwareExpression;
 use Arkitect\Expression\Description;
 use Arkitect\Expression\Expression;
 use Arkitect\Rules\Violation;
 use Arkitect\Rules\ViolationMessage;
 use Arkitect\Rules\Violations;
 
-final class IsA implements Expression
+final class IsA implements Expression, ClassRegistryAwareExpression
 {
     /** @var array<class-string> */
     private $allowedFqcnList;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    private ClassDescriptionRegistry $classDescriptionRegistry;
 
     /**
      * @param array<class-string> $allowedFqcnList
@@ -44,14 +51,31 @@ final class IsA implements Expression
         }
     }
 
+    public function injectClassDescriptionRegistry(ClassDescriptionRegistry $classRegistry): void
+    {
+        $this->classDescriptionRegistry = $classRegistry;
+    }
+
     /**
      * @param array<class-string> $allowedFqcnList
      */
     private function isA(ClassDescription $theClass, string ...$allowedFqcnList): bool
     {
+        $parentList = $theClass->getExtends();
+        $implementationList = $theClass->getInterfaces();
+
         foreach ($allowedFqcnList as $allowedFqcn) {
-            if (is_a($theClass->getFQCN(), $allowedFqcn, true)) {
-                return true;
+            foreach ($parentList as $parent) {
+                $parentDescription = $this->classDescriptionRegistry->getByClass($parent);
+                if ($parent->matches($allowedFqcn) || $this->isA($parentDescription, ...$allowedFqcnList)) {
+                    return true;
+                }
+            }
+            foreach ($implementationList as $interface) {
+                $interfaceDescription = $this->classDescriptionRegistry->getByClass($interface);
+                if ($interface->matches($allowedFqcn) || $this->isA($interfaceDescription, ...$allowedFqcnList)) {
+                    return true;
+                }
             }
         }
 
