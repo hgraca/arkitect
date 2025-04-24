@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Arkitect\Expression\Boolean;
 
 use Arkitect\Analyzer\ClassDescription;
+use Arkitect\Analyzer\ClassDescriptionRegistry;
+use Arkitect\Expression\ClassRegistryAwareExpression;
 use Arkitect\Expression\Description;
 use Arkitect\Expression\Expression;
 use Arkitect\Rules\Violation;
@@ -11,10 +13,15 @@ use Arkitect\Rules\ViolationMessage;
 use Arkitect\Rules\Violations;
 use Arkitect\Shared\String\IndentationHelper;
 
-final class Orx implements Expression
+final class Orx implements Expression, ClassRegistryAwareExpression
 {
     /** @var array<Expression> */
     private $expressions;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    private ClassDescriptionRegistry $classDescriptionRegistry;
 
     public function __construct(Expression ...$expressions)
     {
@@ -41,6 +48,7 @@ final class Orx implements Expression
         }
 
         foreach ($this->expressions as $expression) {
+            $this->classDescriptionRegistry->injectInto($expression);
             $newViolations = new Violations();
             $expression->evaluate($theClass, $newViolations, '');
             if (0 === $newViolations->count()) {
@@ -55,5 +63,10 @@ final class Orx implements Expression
                 $theClass->getFilePath()
             )
         );
+    }
+
+    public function injectClassDescriptionRegistry(ClassDescriptionRegistry $classRegistry): void
+    {
+        $this->classDescriptionRegistry = $classRegistry;
     }
 }
