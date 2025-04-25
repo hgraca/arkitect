@@ -6,9 +6,11 @@ namespace Arkitect\Expression\ForClasses;
 
 use Arkitect\Analyzer\ClassDependencyCollection;
 use Arkitect\Analyzer\ClassDescription;
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Exceptions\ClassFileNotFoundException;
 use Arkitect\Exceptions\FailOnFirstViolationException;
 use Arkitect\Expression\Boolean\Not;
+use Arkitect\Expression\ClassRegistryAwareExpression;
 use Arkitect\Expression\Description;
 use Arkitect\Expression\Expression;
 use Arkitect\Expression\ExpressionCollection;
@@ -16,10 +18,15 @@ use Arkitect\Rules\Violation;
 use Arkitect\Rules\ViolationMessage;
 use Arkitect\Rules\Violations;
 
-class NotDependsOnTheseExpressions implements Expression
+class NotDependsOnTheseExpressions implements Expression, ClassRegistryAwareExpression
 {
     /** @var ExpressionCollection */
     private $expressions;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    private ClassDescriptionRegistry $classDescriptionRegistry;
 
     public function __construct(Expression ...$expressions)
     {
@@ -50,6 +57,7 @@ class NotDependsOnTheseExpressions implements Expression
      */
     public function evaluate(ClassDescription $theClass, Violations $violations, string $because = ''): void
     {
+        $this->expressions->injectClassDescriptionRegistry($this->classDescriptionRegistry);
         $dependencies = (new ClassDependencyCollection(...$theClass->getDependencies()))->removeDuplicateDependencies();
 
         foreach ($dependencies as $dependency) {
@@ -76,5 +84,10 @@ class NotDependsOnTheseExpressions implements Expression
                 );
             }
         }
+    }
+
+    public function injectClassDescriptionRegistry(ClassDescriptionRegistry $classRegistry): void
+    {
+        $this->classDescriptionRegistry = $classRegistry;
     }
 }

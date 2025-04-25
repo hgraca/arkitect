@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Arkitect\Tests\Unit\Expressions\ForClasses;
 
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Expression\Boolean\Andx;
 use Arkitect\Expression\ForClasses\NotDependsOnTheseExpressions;
 use Arkitect\Expression\ForClasses\NotResideInTheseNamespaces;
@@ -22,6 +23,7 @@ class NotDependsOnTheseExpressionsTest extends AbstractUnitTest
                 new NotResideInTheseNamespaces('Arkitect\Tests\Fixtures\ComponentC\ComponentCA\\')
             )
         );
+        $notDependOn->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
 
         $classDescription = $this->getClassDescription(ClassBDependingOnAD::class);
         $because = 'we want to add this rule for our software';
@@ -36,6 +38,7 @@ class NotDependsOnTheseExpressionsTest extends AbstractUnitTest
         $notDependOn = new NotDependsOnTheseExpressions(
             new ResideInOneOfTheseNamespaces('Arkitect\Tests\Fixtures\ComponentA\\')
         );
+        $notDependOn->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
 
         $classDescription = $this->getClassDescription(ClassBDependingOnAD::class);
         $because = 'we want to add this rule for our software';
@@ -67,6 +70,7 @@ class NotDependsOnTheseExpressionsTest extends AbstractUnitTest
                 new NotResideInTheseNamespaces('Arkitect\Tests\Fixtures\ComponentC\ComponentCA\\')
             )
         );
+        $notDependOn->injectClassDescriptionRegistry(ClassDescriptionRegistry::new());
 
         $classDescription = $this->getClassDescription(ClassBDependingOnAD::class);
         $because = 'we want to add this rule for our software';
