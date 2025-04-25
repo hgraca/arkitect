@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Arkitect\Rules;
 
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Expression\Expression;
 use Arkitect\Rules\DSL\AndThatShouldParser;
 use Arkitect\Rules\DSL\ThatParser;
@@ -12,9 +13,9 @@ class AllClasses implements ThatParser
     /** @var RuleBuilder */
     protected $ruleBuilder;
 
-    public function __construct()
+    public function __construct(ClassDescriptionRegistry $classDescriptionRegistry)
     {
-        $this->ruleBuilder = new RuleBuilder();
+        $this->ruleBuilder = new RuleBuilder($classDescriptionRegistry);
     }
 
     public function that(Expression $expression): AndThatShouldParser

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arkitect\Expression;
 
 use Arkitect\Analyzer\ClassDescription;
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Rules\Violations;
 
 /**
@@ -88,5 +89,10 @@ final class ExpressionCollection implements \IteratorAggregate
             }
         }
         $this->expressionList[] = $newExpression;
+    }
+
+    public function injectClassDescriptionRegistry(ClassDescriptionRegistry $classDescriptionRegistry): void
+    {
+        $classDescriptionRegistry->injectInto(...$this->expressionList);
     }
 }

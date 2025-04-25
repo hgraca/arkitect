@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Arkitect\Rules;
 
+use Arkitect\Analyzer\ClassDescriptionRegistry;
 use Arkitect\Expression\Expression;
 
 class RuleBuilder
@@ -21,17 +22,22 @@ class RuleBuilder
     /** @var bool */
     private $runOnlyThis;
 
-    public function __construct()
+    private ClassDescriptionRegistry $classDescriptionRegistry;
+
+    public function __construct(ClassDescriptionRegistry $classDescriptionRegistry)
     {
         $this->thats = new Specs();
         $this->shoulds = new Constraints();
         $this->because = '';
         $this->classesToBeExcluded = [];
         $this->runOnlyThis = false;
+        $this->classDescriptionRegistry = $classDescriptionRegistry;
     }
 
     public function addThat(Expression $that): self
     {
+        $this->classDescriptionRegistry->injectInto($that);
+
         $this->thats->add($that);
 
         return $this;
@@ -39,6 +45,8 @@ class RuleBuilder
 
     public function addShould(Expression $should): self
     {
+        $this->classDescriptionRegistry->injectInto($should);
+
         $this->shoulds->add($should);
 
         return $this;
@@ -71,6 +79,7 @@ class RuleBuilder
 
     public function classesToBeExcludedByExpression(Expression ...$classesToBeExcluded): self
     {
+        $this->classDescriptionRegistry->injectInto(...$classesToBeExcluded);
         $this->classesToBeExcluded = $classesToBeExcluded;
 
         return $this;

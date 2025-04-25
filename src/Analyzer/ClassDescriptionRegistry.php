@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Arkitect\Analyzer;
 
+use Arkitect\Expression\ClassRegistryAwareExpression;
+use Arkitect\Expression\Expression;
+
 /**
  * @implements \IteratorAggregate<ClassDescription>
  */
@@ -27,6 +30,15 @@ final class ClassDescriptionRegistry implements \IteratorAggregate
     public static function get(?ClassDescriptionCollection $classDescriptionCollection = null): self
     {
         return self::$self ?? new self($classDescriptionCollection);
+    }
+
+    public function injectInto(Expression ...$classesToBeExcluded): void
+    {
+        foreach ($classesToBeExcluded as $expression) {
+            if ($expression instanceof ClassRegistryAwareExpression) {
+                $expression->injectClassDescriptionRegistry($this);
+            }
+        }
     }
 
     /**
