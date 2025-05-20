@@ -45,6 +45,17 @@ final class ExpressionCollection implements \IteratorAggregate
 
     public function addExpression(Expression $newExpression): void
     {
+        foreach ($this->expressionList as $index => $existingExpression) {
+            if (
+                $newExpression instanceof $existingExpression
+                && $newExpression instanceof MergeableExpression
+                && $existingExpression instanceof MergeableExpression
+            ) {
+                $this->expressionList[$index] = $existingExpression->mergeWith($newExpression);
+
+                return;
+            }
+        }
         $this->expressionList[] = $newExpression;
     }
 
