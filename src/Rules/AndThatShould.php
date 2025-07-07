@@ -17,6 +17,9 @@ class AndThatShould implements AndThatShouldParser
         $this->ruleBuilder = $expressionBuilder;
     }
 
+    /**
+     * @deprecated This is not working as expected, use `->that(new Andx(...))` instead.
+     */
     public function andThat(Expression $expression): AndThatShouldParser
     {
         $this->ruleBuilder->addThat($expression);
